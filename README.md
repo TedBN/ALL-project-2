@@ -1,2 +1,2 @@
-# ALL-project-2
-A depository with files for our second ALL project
+# Welcome to the 2nd ALL project repository
+A depository with files for our second ALL project, an old school turn-based strategy game written in C++.
