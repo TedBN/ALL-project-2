@@ -11,6 +11,8 @@ using namespace std;
 
 
 int main() {
+    /** Currently it is testing area */
+
     vector < Region> regions;
     Region latvia;
     Region lithuania;
@@ -24,10 +26,12 @@ int main() {
 
     x = latvia.oil;
 
+    regions.at(0).colour = "Nice";
+
     string x_str = to_string(x);
 
 
-    cout << regions.at(0).asda;
+    cout << regions.at(0).colour;
 
 
 //    for (int i = 0; i < regions.size(); ++i) {
