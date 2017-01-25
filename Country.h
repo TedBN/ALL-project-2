@@ -18,27 +18,30 @@ using namespace std;
 
 class Country {
 
-    /** Class which provides to the player control over his country */
+    /** Class that encapsulates the state of player's country and provides member functions for simple control */
+
 private:
 
-    string name;
-    vector <Country> allies ;
-    vector <Country> enemies;
+    string name; // User defined name for his country
+
+    vector <Country> allies ; // Vector to comprise allies of the country
+    vector <Country> enemies; // Enemies of the country
 
 
-    vector <MilitaryUnit> militaryUnits;
-    vector <Region> regions;
-    char color_on_map;
+    vector <MilitaryUnit> militaryUnits; // Vector of military units at the country's disposal
 
-    vector <resources> notifications;
+    vector <Region> regions; // Vector to comprise regions under the country's control
 
-    struct resources {
-        string
+    char color_on_map; // Colour by which the country is represented on the map
+
+    vector <vector> notifications; // List of pending notifications by diplomacyRequest()
+
+    struct resources { // Country's wealth
         int money;
-        int iron;
-        int leather;
-        int stone;
-        int wood;
+        int metal;
+        int oil;
+        int energy;
+        int manpower;
     } resources;
 
     // METHODS
@@ -52,9 +55,6 @@ private:
     void addRegion(Region region) {};
 
     void buyUnits(int quantity); // <-----?????? Will be ready when Teodor presents his design
-
-    void diplomacyRequest(Country fraction, char requestType);
-
 
 public:
     Country(const string &name) : name(name) {}
