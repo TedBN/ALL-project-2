@@ -1,0 +1,3 @@
+/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/ALL_project_2.dir
