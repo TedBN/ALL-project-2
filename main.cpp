@@ -1,12 +1,13 @@
 #include <iostream>
 
 
-
-
+#include <array>
 #include "vector"
 
-#include "Manager.h"
+
 #include <string>
+
+#include "Manager.h"
 
 
 using namespace std;
@@ -37,7 +38,10 @@ int main() {
 //    dr.issuerCountry->name = "norm";
 //    cout << dr.issuerCountry->name;
 
+
     Manager startGame;
+    cout << startGame.activeCountries.at(0).regions.at(0).defenseArmies.at(0).txt;
+
 
 
 //    for (int i = 0; i < sizeof(notSelectedCountries); i++) {
