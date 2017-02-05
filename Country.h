@@ -24,6 +24,8 @@ class DiplomacyRequest {
 
 
 public:
+    DiplomacyRequest * myPointer;
+
     Country *issuerCountry;
     Country *recipientCountry;
 
@@ -42,6 +44,8 @@ public:
     void acceptRequest();
     void declainRequest();
 
+    void sendRequest(Country * recipientCountry, DiplomacyRequest * myPointer);
+
 public:
     DiplomacyRequest(Country *issuerCountry, Country *recipientCountry, const string &message, bool formAlliance,
                      bool breakAlliance, bool declareWar, bool ceasfire, int aPassRight, int money, int metal, int oil,
@@ -49,8 +53,14 @@ public:
                                                  message(message), formAlliance(formAlliance),
                                                  breakAlliance(breakAlliance), declareWar(declareWar),
                                                  ceasfire(ceasfire), aPassRight(aPassRight), money(money), metal(metal),
-                                                 oil(oil), energy(energy), manpower(manpower) {}
+                                                 oil(oil), energy(energy), manpower(manpower) {
 
+        DiplomacyRequest::myPointer = this;
+    }
+
+    virtual ~DiplomacyRequest() {
+        std::cout << " I got into destructor! "<< myPointer;
+    }
 };
 
 class Country {
@@ -63,21 +73,24 @@ public:
 
     // to-do class' member variable as pointer to mmry location
 
-    vector <Country> allies ; // Vector to comprise allies of the country
-    vector <Country> enemies; // Enemies of the country
-    vector <Country> aPassRight; // Permission to cross other country's border
+    vector <Country*> allies ; // Vector to comprise allies of the country
+    vector <Country*> enemies; // Enemies of the country
+    vector <Country*> neutral; // Permission to cross other country's border
 
 
     vector <Region> regions; // Vector to comprise regions under the country's control
 
     char color_on_map; // Colour by which the country is represented on the map
 
-    void diplomacyRequest (Country *issuerCountry, Country *recipientCountry,  string message, bool formAlliance,
+    DiplomacyRequest diplomacyRequest (Country *issuerCountry, Country *recipientCountry,  string message, bool formAlliance,
                            bool breakAlliance, bool declareWar, bool ceasfire, int aPassRight, int money, int metal, int oil,
                            int energy, int manpower) {
 
         DiplomacyRequest dr(issuerCountry, recipientCountry, message, formAlliance, breakAlliance, declareWar,
-                            ceasfire, aPassRight, money, metal, oil, energy, manpower); }
+                            ceasfire, aPassRight, money, metal, oil, energy, manpower);
+
+        return dr;
+    }
 
 
     vector <DiplomacyRequest> pendingDiplomacy; // List of pending notifications by diplomacyRequest()
@@ -103,6 +116,8 @@ public:
         regions.push_back(region1);
         regions.push_back(region2);
     }
+
+    Country() {}
 } ;
 
 #endif //EUROPE_AT_WAR_FRACTION_H

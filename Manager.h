@@ -16,10 +16,17 @@ class Manager {
 public:
 
     array <Region, 8> ALL_REGIONS;
-    vector <Country> activeCountries;
+    vector <Country> activeCountries;  // to-do Should or shouldn't I make it list type
     string allRegionMap;
 
 
+
+//    void sendDiplomacy (Country recipient) {
+//        countryInControl.diplomacyRequest(&countryInControl, &activeCountries.at(1), "Hello" , true, false,
+//                false, false, 0, 1000, 1, 2, 3, 4);
+//
+//
+//    }
 
     void initCountries( ) {
         /** A method to initialise a country after a user has chosen a country by the name.
@@ -28,75 +35,112 @@ public:
          * Once the Country object has been initialised, it is appended to the vector activeCountries;
          */
 
-        string selectedCountry;
-        int userInputCounter = 0;
+        string userInput;
+        int userInputCounter = 0; // Counts how many times a user has entered valid input
         bool isInputValid;
 
-        string notSelectedCountries[5] = {"West", "North", "South", "East", "Next"};
+        array <string, 5> validInputs = {"West", "North", "South", "East", "Next"};
+
 
         cout << "Select a country: ";
 
 
-        do {
-            for (int i = 0; i < 5; i++) {
-                if (notSelectedCountries[i] != "") {
-                    cout << " > " << notSelectedCountries[i] ;
+        do { // USER INPUT LOOP
+        // Max 4 iterations of a valid input, userInputCounter keeps track of that
+
+            for (int i = 0; i < validInputs.size(); i++) {
+                if (validInputs[i] != "") {
+                    // Condition to check which countries haven't been selected yet
+                    // and output them.
+                    cout << " > " << validInputs[i] ;
                 }
             }
             cout << " to exit" << endl;
-            cin >> selectedCountry;
+            cin >> userInput;
 
-            isInputValid = find(begin(notSelectedCountries), end(notSelectedCountries), selectedCountry) != end(notSelectedCountries);
+            // Checking weather or not the user input is in the list of valid input
+            isInputValid = find(begin(validInputs), end(validInputs), userInput) != end(validInputs);
 
-            if (isInputValid == false) { cout << "Invalid input, try again"<< endl;
+            if (isInputValid == false) {
+                cout << "Invalid input, try again"<< endl;
                 continue;}
 
-            for (int i = 0; i < 5; i++) {
-                if (notSelectedCountries[i] == selectedCountry) {notSelectedCountries[i] = "";}
+            //  STARTS PROCESSING OF VALID INPUT
+
+            for (int i = 0; i < validInputs.size(); i++) {
+                // Replacing the matching value in the input list with ""
+                if (validInputs[i] == userInput) {validInputs[i] = "";}
             }
 
-            if(selectedCountry == "West") {
+            if(userInput == "West") {
 
-
-
+                // A country is initialised with pre-set regions and name
                 Country outCountry(ALL_REGIONS[0], ALL_REGIONS[1], "West");
-
+                // The country is included into the Manager class' activeCountries vector.
                 setActiveCountries(outCountry);
 
 
-            } else if( selectedCountry == "East") {
+            } else if( userInput == "East") {
 
-
+                // A country is initialised with pre-set regions and name
                 Country outCountry(ALL_REGIONS[2], ALL_REGIONS[3],"East");
-
+                // The country is included into the Manager class' activeCountries vector.
                 setActiveCountries(outCountry);
 
-            } else if( selectedCountry == "North") {
+            } else if( userInput == "North") {
 
-
+                // A country is initialised with pre-set regions and name
                 Country outCountry(ALL_REGIONS[4], ALL_REGIONS[5], "North");
-
+                // The country is included into the Manager class' activeCountries vector.
                 setActiveCountries(outCountry);
 
-            } else  if (selectedCountry == "South"){
+            } else  if (userInput == "South"){
 
-
+                // A country is initialised with pre-set regions and name
                 Country outCountry(ALL_REGIONS[6], ALL_REGIONS[7], "South");
-
+                // The country is included into the Manager class' activeCountries vector.
                 setActiveCountries(outCountry);
 
             }
 
             ++userInputCounter;
-        } while ((userInputCounter < 4) && (selectedCountry != "Next"));
 
+        } while ((userInputCounter < 4) && (userInput != "Next"));
+
+        fillNeutralCountries(); // Procedure to set all the initialised countries neutral to each other.
     };
+
+    void fillNeutralCountries () {
+        /**A procedure to set all the initialised countries neutral to each other. */
+
+        // to-do could it be done with ranged for?
+
+        for (int i = 0; i < activeCountries.size(); i++) {
+            // In range of all active countries, where each country is i,
+            // In range of all active countries, where each country is j,
+            // If i is not equal to j, then
+            // include the country j into the country's i vector of neutral countries.
+
+            for (int j = 0; j < activeCountries.size(); j++) {
+
+                if (i != j) {
+                    activeCountries.at(i).neutral.push_back(&activeCountries.at(j));
+                }
+            }
+        }
+    }
 
     void howManyCountries () {cout << activeCountries.size();}
 
     void initRegions() {
+        /** Initialisation of class Region objects which have pre-determined member values.
+         */
 
         for (int i = 0; i < ALL_REGIONS.size(); i++) {
+
+            // From 0 to the size of the array ALL_REGIONS
+            // to-do would there be a benefit from dynamic initialisation?
+
             switch (i) {
                 case 0: { Region region0("Region_0"); ALL_REGIONS[i] = region0;
                     break;}

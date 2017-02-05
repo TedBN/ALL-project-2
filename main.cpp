@@ -4,11 +4,9 @@
 #include <array>
 #include "vector"
 
-
-#include <string>
-
 #include "Manager.h"
 
+#include <string>
 
 using namespace std;
 
@@ -40,7 +38,24 @@ int main() {
 
 
     Manager startGame;
-    cout << startGame.activeCountries.at(0).regions.at(0).defenseArmies.at(0).txt;
+
+    for (int i = 0; i < 3; i++) {
+    cout << startGame.activeCountries.at(0).neutral.at(i)->countryName << endl; }
+
+
+
+    class a {
+
+
+
+    };
+
+//    vector<string*> str;
+//
+//    string strValue = "STRING";
+//
+//    str.push_back(&strValue);
+
 
 
 
