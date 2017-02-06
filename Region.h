@@ -15,14 +15,19 @@
 
 class Region;
 
+
 class Army {
 
     string name;
-    int health;
+    int health = 100;
     Region *currentLocation;
 
     std::vector <MilitaryUnit> landArmy;
 
+public:
+
+    string txt = "I do exist";
+    Army() {}
 
 
 };
@@ -38,6 +43,7 @@ public:
     int energyProduction = 50;
     int manpowerProduction = 50;
 
+    std::string name;
     std::string colour;
     std::vector <Army> defenseArmies;
 
@@ -65,9 +71,14 @@ public:
 
     void formArmy();
 
+    Region(const string &name) : name(name) {Army army; defenseArmies.push_back(army);}
+
     Region() {}
 
-}region1, region2, region3, region4, region5, region6, region7, region8, region9;
+    virtual ~Region() {
+    }
+
+};
 
 
 #endif //EUROPE_AT_WAR_REGION_H

@@ -4,14 +4,10 @@ project(ALL_project_2)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
-        Test/Test.h
-        Test/Test1.h
-        Army.h
         Country.h
-        DiplomacyRequest.h
         main.cpp
         Manager.h
         MilitaryUnit.h
-        Region.h)
+        Region.h Test/T1.h Test/T2.h Test/T3.h Test/T4.h)
 
 add_executable(ALL_project_2 ${SOURCE_FILES})

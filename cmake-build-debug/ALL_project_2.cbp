@@ -80,13 +80,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Army.h">
-			<Option target="ALL_project_2"/>
-		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Country.h">
-			<Option target="ALL_project_2"/>
-		</Unit>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/DiplomacyRequest.h">
 			<Option target="ALL_project_2"/>
 		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Manager.h">
@@ -98,10 +92,16 @@
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Region.h">
 			<Option target="ALL_project_2"/>
 		</Unit>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/Test.h">
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T1.h">
 			<Option target="ALL_project_2"/>
 		</Unit>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/Test1.h">
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T2.h">
+			<Option target="ALL_project_2"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T3.h">
+			<Option target="ALL_project_2"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T4.h">
 			<Option target="ALL_project_2"/>
 		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/main.cpp">

@@ -15,6 +15,8 @@ Region.h
 /Users/Oscari/My Files/Git/ALL-project-2/Manager.h
 Country.h
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
+array
+-
 
 /Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
 iostream
@@ -32,6 +34,8 @@ MilitaryUnit.h
 
 /Users/Oscari/My Files/Git/ALL-project-2/main.cpp
 iostream
+-
+array
 -
 vector
 /Users/Oscari/My Files/Git/ALL-project-2/vector
