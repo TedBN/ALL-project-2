@@ -1,6 +1,7 @@
 #include <iostream>
 
 
+
 #include <array>
 #include "vector"
 
@@ -51,25 +52,26 @@ int main() {
 
 
     Manager startGame;
+    cout<<"TERMINATED!!!";
 
-//    cout << startGame.activeCountries.at(0)->neutral.at(0)->countryName;
-//    cout << startGame.activeCountries.at(0)->neutral.at(1)->countryName;
-//    cout << startGame.activeCountries.at(0)->neutral.at(2)->countryName << endl;
+//    cout << startGame.countries.at(0)->neutral.at(0)->countryName;
+//    cout << startGame.countries.at(0)->neutral.at(1)->countryName;
+//    cout << startGame.countries.at(0)->neutral.at(2)->countryName << endl;
 //
-//    cout << startGame.activeCountries.at(1)->neutral.at(0)->countryName ;
-//    cout << startGame.activeCountries.at(1)->neutral.at(1)->countryName;
-//    cout << startGame.activeCountries.at(1)->neutral.at(2)->countryName << endl;
+//    cout << startGame.countries.at(1)->neutral.at(0)->countryName ;
+//    cout << startGame.countries.at(1)->neutral.at(1)->countryName;
+//    cout << startGame.countries.at(1)->neutral.at(2)->countryName << endl;
 //
-//    cout << startGame.activeCountries.at(2)->neutral.at(0)->countryName ;
-//    cout << startGame.activeCountries.at(2)->neutral.at(1)->countryName;
-//    cout << startGame.activeCountries.at(2)->neutral.at(2)->countryName << endl;
+//    cout << startGame.countries.at(2)->neutral.at(0)->countryName ;
+//    cout << startGame.countries.at(2)->neutral.at(1)->countryName;
+//    cout << startGame.countries.at(2)->neutral.at(2)->countryName << endl;
 //
-//    cout << startGame.activeCountries.at(3)->neutral.at(0)->countryName ;
-//    cout << startGame.activeCountries.at(3)->neutral.at(1)->countryName;
-//    cout << startGame.activeCountries.at(3)->neutral.at(2)->countryName<< endl;
+//    cout << startGame.countries.at(3)->neutral.at(0)->countryName ;
+//    cout << startGame.countries.at(3)->neutral.at(1)->countryName;
+//    cout << startGame.countries.at(3)->neutral.at(2)->countryName<< endl;
 //
 //    startGame.sendDiplomacy();
-//    cout << startGame.activeCountries.at(1).pendingDiplomacy.at(0).message;
+//    cout << startGame.countries.at(1).pendingDiplomacy.at(0).message;
 //    cout << "Finish";
 
 //    vector<string*> *str;

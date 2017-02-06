@@ -5,7 +5,6 @@
 #ifndef ALL_PROJECT_2_MANAGER_H
 #define ALL_PROJECT_2_MANAGER_H
 
-// to-do min 2 player game
 
 #include "Country.h"
 #include <array>
@@ -15,15 +14,17 @@ class Manager {
 
 public:
 
+    int turn = 1; // Keeps track of the current turn;
+    int countriesInGame; // Quantity of currently active countries
     array  <Region, 8> ALL_REGIONS;
-    array <Country*,4> activeCountries = {NULL, NULL, NULL, NULL};  // to-do Should or shouldn't I make it list type
+    array <Country*,4> countries = {NULL, NULL, NULL, NULL};
     string allRegionMap;
 
 
 
     void sendDiplomacy () {
 
-        activeCountries.at(0)->diplomacyRequest(activeCountries.at(0), activeCountries.at(1), "Hello" , true, false,
+        countries.at(0)->diplomacyRequest(countries.at(0), countries.at(1), "Hello" , true, false,
                 false, false, 0, 1000, 1, 2, 3, 4);
     }
 
@@ -75,35 +76,37 @@ public:
 
                 // A country is initialised with pre-set regions and name
                 Country *outCountry = new Country(ALL_REGIONS[0], ALL_REGIONS[1], "West");
-                // The country is included into the Manager class' activeCountries vector.
-                activeCountries[3] = outCountry;
+                // The country is included into the Manager class' countries vector.
+                countries[3] = outCountry;
 
 
             } else if( userInput == "East") {
 
                 // A country is initialised with pre-set regions and name
                 Country *outCountry = new Country(ALL_REGIONS[2], ALL_REGIONS[3],"East");
-                // The country is included into the Manager class' activeCountries vector.
-                activeCountries[0] = outCountry;
+                // The country is included into the Manager class' countries vector.
+                countries[0] = outCountry;
 
             } else if( userInput == "North") {
 
                 // A country is initialised with pre-set regions and name
                 Country *outCountry = new Country(ALL_REGIONS[4], ALL_REGIONS[5], "North");
-                // The country is included into the Manager class' activeCountries vector.
-                activeCountries[1] = outCountry;
+                // The country is included into the Manager class' countries vector.
+                countries[1] = outCountry;
 
             } else  if (userInput == "South"){
 
                 // A country is initialised with pre-set regions and name
                 Country *outCountry = new Country(ALL_REGIONS[6], ALL_REGIONS[7], "South");
-                // The country is included into the Manager class' activeCountries vector.
-                activeCountries[2] = outCountry;
+                // The country is included into the Manager class' countries vector.
+                countries[2] = outCountry;
             }
 
             ++userInputCounter;
 
         } while ((userInputCounter < 4) && (userInput != "Next"));
+
+        Manager::countriesInGame = userInputCounter; // Save the quantity of initialised countries
 
 
         fillNeutralCountries(); // Procedure to set all the initialised countries neutral to each other.
@@ -115,7 +118,7 @@ public:
 
         // to-do could it be done with ranged for?
 
-        for (int i = 0; i < activeCountries.size(); i++) {
+        for (int i = 0; i < countries.size(); i++) {
             // In range of pointers to all active countries, where each pointer to a country is i,
             // If i points to NULL, then next iteration, else
             // In range of all active countries, where each country is j,
@@ -123,18 +126,18 @@ public:
             // If i is not equal to j, then
             // include the pointer to the country j into the country's i vector of pointers to neutral countries.
 
-            if (activeCountries[i] == NULL) { continue; }
+            if (countries[i] == NULL) { continue; }
 
-            for (int j = 0; j < activeCountries.size(); j++) {
+            for (int j = 0; j < countries.size(); j++) {
 
-                if (i != j && activeCountries[j] != NULL) {
-                    activeCountries[i]->neutral.push_back(activeCountries[j]);
+                if (i != j && countries[j] != NULL) {
+                    countries[i]->neutral.push_back(countries[j]);
                 }
             }
         }
     }
 
-    void howManyCountries () {cout << activeCountries.size();}
+    void howManyCountries () {cout << countries.size();}
 
     void initRegions() {
         /** Initialisation of class Region objects which have pre-determined member values.
@@ -142,7 +145,6 @@ public:
 
         for (int i = 0; i < ALL_REGIONS.size(); i++) {
 
-            // From 0 to the size of the array ALL_REGIONS
             // to-do would there be a benefit from dynamic initialisation?
 
             switch (i) {
@@ -167,9 +169,20 @@ public:
     };
 
     void turnInterfaceFor (Country countryInControl) {
-        cout << ">>> " << countryInControl.countryName << " <<<" << endl;
+        /** A function to provide player with a control interface of his country.
+         * The mainLoop() passes a Country object into argument of the function
+         * where the user gets to enter commands to invoke functions which alter the
+         * state of the program.
+         *
+         * Loop operates in the function which lets the user enter commands until
+         * the procedure to switch the turn is called.
+         *
+         */
+
+
+        cout << "[ "<< Manager::turn << " ] >>> " << countryInControl.countryName << " <<<" << endl;
         cout << "Commands available" << endl;
-        cout << "dr - Send a diplomacy request" << endl;
+        cout << "end - Call destructor" << endl;
         cout << "et - End turn" << endl;
 
 
@@ -179,8 +192,10 @@ public:
             cout << "Your command: ";
             cin >> command;
 
-            if (command == "dr") {
-                //countryInControl.diplomacyRequest()
+            if (command == "end") {
+                Manager::~Manager();
+                return;
+
             } else if (command == "et") { return; }
 
             else {
@@ -191,20 +206,41 @@ public:
     }
 
     void mainLoop() {
+        /**
+         * Iterate until Manager::activeCountries > 1 {
+         *
+         * if the pointer [i] in the array "countries" is NULL, then i++ and switch to next iteration, else
+         *
+         * provide the country at "countries[i]" with control interface.
+         *
+         * if i is equal to the size of "countries", set it to 0, increment the current turn counter and switch to next iteration, else
+         *
+         * increment i and repeat.
+         *
+         * }
+         */
 
-
-        int turn = 1;
         int i = 0;
-        while (activeCountries.size() > 1) {
-
-            turnInterfaceFor(*activeCountries.at(i));
 
 
-            if (i == activeCountries.size() - 1) {
+
+        while (Manager::countriesInGame > 1) {
+
+            // to-do implement a function to destruct a Country object and decrement Manager::countriesInGame
+
+            if (countries[i] == NULL) {
+                i++;
+                continue;}
+
+            turnInterfaceFor(*countries.at(i));
+
+            if (i == countries.size() - 1) {
                 i = 0;
-                turn += 1;
+                Manager::turn++;
+                continue; }
 
-            } else { i++; }
+            i++;
+
         }
     };
 
@@ -219,7 +255,25 @@ public:
     {
         initRegions();
         initCountries();
-//        mainLoop();
+        mainLoop();
+    }
+
+    virtual ~Manager() {
+        cout << "The End" << endl;
+        for ( int i = 0; i < countries.size(); i++) {
+
+
+            if (countries[i] != NULL) {
+            cout << countries[i]->countryName << " removed from the heap" << endl;
+            delete countries[i];
+            countries[i] = NULL;
+                // to-do resolve destruction issue
+
+            }
+
+        }
+
+        countriesInGame = 0;
     }
 
 };

@@ -75,7 +75,6 @@ public:
 
     string countryName; // User defined name for his country
 
-    // to-do class' member variable as pointer to mmry location
 
     vector <Country*> allies ; // Vector to comprise allies of the country
     vector <Country*> enemies; // Enemies of the country
@@ -111,7 +110,6 @@ public:
     // METHODS
 
     void askResourcesFromRegions() {   };
-             // to-do implement as independent function
 
     void addNewRegion(Region region) {};
     void loseRegion (Region region) {};
