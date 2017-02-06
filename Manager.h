@@ -15,18 +15,17 @@ class Manager {
 
 public:
 
-    array <Region, 8> ALL_REGIONS;
-    vector <Country> activeCountries;  // to-do Should or shouldn't I make it list type
+    array  <Region, 8> ALL_REGIONS;
+    array <Country*,4> activeCountries = {NULL, NULL, NULL, NULL};  // to-do Should or shouldn't I make it list type
     string allRegionMap;
 
 
 
-//    void sendDiplomacy (Country recipient) {
-//        countryInControl.diplomacyRequest(&countryInControl, &activeCountries.at(1), "Hello" , true, false,
-//                false, false, 0, 1000, 1, 2, 3, 4);
-//
-//
-//    }
+    void sendDiplomacy () {
+
+        activeCountries.at(0)->diplomacyRequest(activeCountries.at(0), activeCountries.at(1), "Hello" , true, false,
+                false, false, 0, 1000, 1, 2, 3, 4);
+    }
 
     void initCountries( ) {
         /** A method to initialise a country after a user has chosen a country by the name.
@@ -75,39 +74,40 @@ public:
             if(userInput == "West") {
 
                 // A country is initialised with pre-set regions and name
-                Country outCountry(ALL_REGIONS[0], ALL_REGIONS[1], "West");
+                Country *outCountry = new Country(ALL_REGIONS[0], ALL_REGIONS[1], "West");
                 // The country is included into the Manager class' activeCountries vector.
-                setActiveCountries(outCountry);
+                activeCountries[3] = outCountry;
 
 
             } else if( userInput == "East") {
 
                 // A country is initialised with pre-set regions and name
-                Country outCountry(ALL_REGIONS[2], ALL_REGIONS[3],"East");
+                Country *outCountry = new Country(ALL_REGIONS[2], ALL_REGIONS[3],"East");
                 // The country is included into the Manager class' activeCountries vector.
-                setActiveCountries(outCountry);
+                activeCountries[0] = outCountry;
 
             } else if( userInput == "North") {
 
                 // A country is initialised with pre-set regions and name
-                Country outCountry(ALL_REGIONS[4], ALL_REGIONS[5], "North");
+                Country *outCountry = new Country(ALL_REGIONS[4], ALL_REGIONS[5], "North");
                 // The country is included into the Manager class' activeCountries vector.
-                setActiveCountries(outCountry);
+                activeCountries[1] = outCountry;
 
             } else  if (userInput == "South"){
 
                 // A country is initialised with pre-set regions and name
-                Country outCountry(ALL_REGIONS[6], ALL_REGIONS[7], "South");
+                Country *outCountry = new Country(ALL_REGIONS[6], ALL_REGIONS[7], "South");
                 // The country is included into the Manager class' activeCountries vector.
-                setActiveCountries(outCountry);
-
+                activeCountries[2] = outCountry;
             }
 
             ++userInputCounter;
 
         } while ((userInputCounter < 4) && (userInput != "Next"));
 
+
         fillNeutralCountries(); // Procedure to set all the initialised countries neutral to each other.
+
     };
 
     void fillNeutralCountries () {
@@ -116,15 +116,19 @@ public:
         // to-do could it be done with ranged for?
 
         for (int i = 0; i < activeCountries.size(); i++) {
-            // In range of all active countries, where each country is i,
+            // In range of pointers to all active countries, where each pointer to a country is i,
+            // If i points to NULL, then next iteration, else
             // In range of all active countries, where each country is j,
+            // If j points to NULL, then next iteration, else
             // If i is not equal to j, then
-            // include the country j into the country's i vector of neutral countries.
+            // include the pointer to the country j into the country's i vector of pointers to neutral countries.
+
+            if (activeCountries[i] == NULL) { continue; }
 
             for (int j = 0; j < activeCountries.size(); j++) {
 
-                if (i != j) {
-                    activeCountries.at(i).neutral.push_back(&activeCountries.at(j));
+                if (i != j && activeCountries[j] != NULL) {
+                    activeCountries[i]->neutral.push_back(activeCountries[j]);
                 }
             }
         }
@@ -163,46 +167,62 @@ public:
     };
 
     void turnInterfaceFor (Country countryInControl) {
-//        cout << "Commands available" << endl;
-//        cout << "dr - Send a diplomacy request" << endl;
-//        cout << "Your command: ";
-//
-//        string command;
-//        cin >> command;
-//
-//        if (command == "dr") {
-//            countryInControl.diplomacyRequest()
-//        }
-    };
+        cout << ">>> " << countryInControl.countryName << " <<<" << endl;
+        cout << "Commands available" << endl;
+        cout << "dr - Send a diplomacy request" << endl;
+        cout << "et - End turn" << endl;
 
-    void mainLoop () {
 
+        string command;
+
+        while (true == true) {
+            cout << "Your command: ";
+            cin >> command;
+
+            if (command == "dr") {
+                //countryInControl.diplomacyRequest()
+            } else if (command == "et") { return; }
+
+            else {
+                cout << "Unknown Command, try again" << endl;
+                continue;
+            };
+        }
+    }
+
+    void mainLoop() {
+
+
+        int turn = 1;
         int i = 0;
         while (activeCountries.size() > 1) {
 
-            turnInterfaceFor(activeCountries.at(i));
+            turnInterfaceFor(*activeCountries.at(i));
 
 
-            if ( i == sizeof(activeCountries) - 1) {
+            if (i == activeCountries.size() - 1) {
                 i = 0;
+                turn += 1;
 
-            } else {i++;}
+            } else { i++; }
         }
     };
 
-    void setActiveCountries(Country inCountry) {
-        activeCountries.push_back(inCountry);
-    }
 
-    void formMap() { Region r("rrr");};
+    void formMap() { Region r("rrr"); };
 
     void saveGame();
     void loadGame();
 
 
-    Manager() {initRegions(); initCountries();}
-
+    Manager()
+    {
+        initRegions();
+        initCountries();
+//        mainLoop();
+    }
 
 };
+
 
 #endif //ALL_PROJECT_2_MANAGER_H

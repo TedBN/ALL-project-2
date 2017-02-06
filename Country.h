@@ -41,6 +41,10 @@ public:
     int energy = 0;
     int manpower = 0;
 
+    const string &getMessage() const {
+        return message;
+    }
+
     void acceptRequest();
     void declainRequest();
 
@@ -82,14 +86,15 @@ public:
 
     char color_on_map; // Colour by which the country is represented on the map
 
-    DiplomacyRequest diplomacyRequest (Country *issuerCountry, Country *recipientCountry,  string message, bool formAlliance,
+    void diplomacyRequest (Country *issuerCountry, Country *recipientCountry,  string message, bool formAlliance,
                            bool breakAlliance, bool declareWar, bool ceasfire, int aPassRight, int money, int metal, int oil,
                            int energy, int manpower) {
 
         DiplomacyRequest dr(issuerCountry, recipientCountry, message, formAlliance, breakAlliance, declareWar,
                             ceasfire, aPassRight, money, metal, oil, energy, manpower);
 
-        return dr;
+        neutral.at(0)->pendingDiplomacy.push_back(dr);
+
     }
 
 
