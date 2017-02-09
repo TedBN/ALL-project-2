@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
+map
+-
 vector
 -
 Region.h
@@ -16,6 +18,8 @@ Region.h
 Country.h
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
 array
+-
+map
 -
 
 /Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
@@ -38,9 +42,9 @@ iostream
 array
 -
 vector
-/Users/Oscari/My Files/Git/ALL-project-2/vector
-Manager.h
-/Users/Oscari/My Files/Git/ALL-project-2/Manager.h
+-
 string
 -
+Manager.h
+/Users/Oscari/My Files/Git/ALL-project-2/Manager.h
 
