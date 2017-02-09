@@ -54,13 +54,8 @@ public:
 
         cout << "Your message to " << countriesMap[userInput]->countryName << ": ";
 
-        //cout<< "debug1";
         cin.ignore();
         std::getline(std::cin,userMessage);
-        //cout<<"debug2";
-
-
-        cout << endl << " --- " <<userMessage;
 
 
 
@@ -86,62 +81,87 @@ public:
          */
 
 
-        cout << "[ "<< Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl;
-        cout << "Commands available" << endl;
-        cout << "end: Call destructor" << endl;
-        cout << "et: End turn" << endl;
-        cout << "dr: Diplomacy Request" << endl;
-        cout << "ddr: Display pending diplomacy requests" << endl;
-        cout << "d_reg: Display regions" << endl;
+        cout << "[ "<< Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl << endl;
 
-        string command;
+        cout << "1: Make a diplomacy request" << endl;
+        cout << "2: Display pending diplomacy requests [" << countryInControl->pendingDiplomacy.size() << "]" << endl;
+        cout << "3: Display regions" << endl;
+        cout << "4: End turn" << endl;
+
+        char command;
 
         while (true == true) {  // MAINLOOP
-            cout << "Your command: ";
-            cin  >> command;
+            cout << endl << "Your command: ";
+            cin >> command;
             cout << endl;
 
-
-            if (command == "end") {
-                Manager::~Manager();
-                return;
-
-            } else if (command == "et") {
-                return;
-
-            } else if (command == "dr") {
-                sendDiplomacy(countryInControl);
-
-            } else if (command == "ddr") {
-                // to-do implement as a function;
-                for (int i = 0; i < countryInControl->pendingDiplomacy.size(); ++i) {
-                    cout << endl;
-                    cout << "From: " << countryInControl->pendingDiplomacy.at(i)->issuerCountry->countryName << endl;
-                    cout << "Message: " << endl << countryInControl->pendingDiplomacy.at(i)->getMessage() << endl;
+            switch (command) {
+                case ('1'): {
+                    sendDiplomacy(countryInControl);
+                    break;
                 }
-                cout << endl;
-
-            } else if (command == "d_reg") {
-                Region * selectedRegion;
-                string functionOutcome;
-
-                do {
-                    selectedRegion = countryInControl->inputRegion();
-                    if (selectedRegion == NULL) { break;}
-                    functionOutcome = countryInControl->regionControlInterface(selectedRegion);
+                case ('2'): {
+                    // to-do implement as a function;
+                    for (int i = 0; i < countryInControl->pendingDiplomacy.size(); ++i) {
+                        cout << endl;
+                        cout << "From: " << countryInControl->pendingDiplomacy.at(i)->issuerCountry->countryName
+                             << endl;
+                        cout << "Message: " << endl << countryInControl->pendingDiplomacy.at(i)->getMessage() << endl;
+                    }
+                    break;
                 }
-                while (functionOutcome == "back to region selection");
+                case ('3'): {
+                    Region *selectedRegion;
+                    string functionOutcome;
+
+                    do {
+                        selectedRegion = countryInControl->inputRegion(NULL);
+                        if (selectedRegion == NULL) { break; }
+                        functionOutcome = countryInControl->regionControlInterface(selectedRegion);
+                    } while (functionOutcome == "back to region selection");
+                    break;
+                }
+                case ('4'): {
+                    return;
+                }
 
 
-//                if (selectedRegion == NULL) {
-//                    continue;
-//                } else { selectedRegion->displayStats(); }
-
-            }else {
-                cout << "Unknown Command, try again" << endl << endl;
-            };
+            }
 
         }
+
+//            if (command == "end") {
+//                Manager::~Manager();
+//                return;
+//
+//            } else if (command == "et") {
+//                return;
+//
+//            } else if (command == "dr") {
+//
+//
+//            } else if (command == "ddr") {
+//                // to-do implement as a function;
+//                for (int i = 0; i < countryInControl->pendingDiplomacy.size(); ++i) {
+//                    cout << endl;
+//                    cout << "From: " << countryInControl->pendingDiplomacy.at(i)->issuerCountry->countryName << endl;
+//                    cout << "Message: " << endl << countryInControl->pendingDiplomacy.at(i)->getMessage() << endl;
+//                }
+//                cout << endl;
+//
+//            } else if (command == "d_reg") {
+//
+//
+//
+////                if (selectedRegion == NULL) {
+////                    continue;
+////                } else { selectedRegion->displayStats(); }
+//
+//            }else {
+//                cout << "Unknown Command, try again" << endl << endl;
+//            };
+//
+//        }
     }
 
 //  ###############################
@@ -183,13 +203,13 @@ public:
          */
 
         string userInput;
-        int userInputCounter = 0; // Counts how many times a user has entered valid input
+        int userInputCounter = 0; // Counts how many times a user has entered valid value
         bool isInputValid;
 
-        array <string, 5> validInputs = {"West", "North", "South", "East", "Next"};
+        array <string, 5> validInputs = {"West", "North", "South", "East", "Continue"};
 
 
-        cout << "Select a country: ";
+        cout << "Select a country: " << endl ;
 
 
         do { // USER INPUT LOOP
@@ -199,17 +219,19 @@ public:
                 if (validInputs[i] != "") {
                     // Condition to check which countries haven't been selected yet
                     // and output them.
-                    cout << " > " << validInputs[i] ;
+                    cout << validInputs[i] <<endl;
                 }
             }
-            cout << " to exit" << endl;
+
+            cout << "-> ";
             cin >> userInput;
+            cout << endl;
 
             // Checking weather or not the user input is in the list of valid input
             isInputValid = find(begin(validInputs), end(validInputs), userInput) != end(validInputs);
 
             if (isInputValid == false) {
-                cout << "Invalid input, try again"<< endl;
+                cout << "Invalid input, try again"<< endl << endl;
                 continue;}
 
             //  STARTS PROCESSING OF VALID INPUT
@@ -219,7 +241,7 @@ public:
                 if (validInputs[i] == userInput) {validInputs[i] = "";}
             }
 
-            if(userInput == "West") {
+            if(userInput == "West" ) {
 
                 // A country is initialised with pre-set regions and name
                 Country *outCountry = new Country(&ALL_REGIONS[0], &ALL_REGIONS[1], "West");
@@ -248,9 +270,9 @@ public:
                 // The country is included into the Manager class' countries vector.
                 countries[2] = outCountry;
 
-            } else if (userInput == "Next") {
+            } else if (userInput == "Continue") {
                 if (userInputCounter < 2) {
-                    cout << "At least 2 countries required. You have: " << userInputCounter << endl;
+                    cout << "At least 2 countries required. You have: " << userInputCounter << endl << endl;
                     continue;}
                 else { break;}
             }

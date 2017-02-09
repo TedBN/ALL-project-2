@@ -93,7 +93,7 @@ public:
     }
     void displayStats() {
 
-        cout << endl << name << endl;
+        cout << endl << ">>" << name << endl;
 
         cout << endl << "Energy production: " << energyProduction << endl;
         cout << "Metal production: " << metalProduction << endl;
@@ -105,7 +105,7 @@ public:
 
         cout << "Stockpile: " << stockPile << endl << endl;
 
-        cout << "Army units: " << defenceArmies.size() << endl << endl;
+        cout << "Army units: " << defenceArmies.size() << endl ;
     }
 
     void recruitArmy () {
