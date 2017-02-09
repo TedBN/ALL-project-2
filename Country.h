@@ -93,10 +93,6 @@ public:
                            int energy, int manpower) {
     }
 
-    void transferResources(Region * recipientRegion) {
-
-
-    };
 
     map <string, Region*> structuriseRegionsAsMap () {
         /** A function to convert a country's "regions" array, which contains "Region" objects,
@@ -131,7 +127,7 @@ public:
 
         while (isInputValid == false) {  // INPUT VALIDATION
 
-            cout << "Your choice: ";
+            cout << "Choose Region: ";
             cin >> userInput;
             isInputValid = regionsAsMap.find(userInput) != regionsAsMap.end();
 
@@ -164,7 +160,7 @@ public:
 
         // #### AVAILABILITY CHECK ####
         bool areResourcesSufficient;
-        areResourcesSufficient = fromRegion->checkResourceAvailability(stoi(userInputMetal),stoi(userInputOil), stoi(userInputMetal));
+        areResourcesSufficient = fromRegion->checkResourceAvailability(stoi(userInputMetal),stoi(userInputOil), stoi(userInputEnergy));
 
         // #### CONFIRMATION ####
         if (areResourcesSufficient) {
@@ -173,8 +169,8 @@ public:
             cin >> userConfirmation;
 
             if ( (userConfirmation == 'Y') || (userConfirmation == 'y') ) {
-                fromRegion -> deductResources(stoi(userInputMetal),stoi(userInputOil), stoi(userInputMetal));
-                toRegion -> addResources(stoi(userInputMetal),stoi(userInputOil), stoi(userInputMetal));
+                fromRegion -> deductResources(stoi(userInputMetal),stoi(userInputOil), stoi(userInputEnergy));
+                toRegion -> addResources(stoi(userInputMetal),stoi(userInputOil), stoi(userInputEnergy));
             } else {
                 cout << "The process shut down" << endl;
                 return;
@@ -197,7 +193,60 @@ public:
 
     // METHODS
 
-    void askResourcesFromRegions() {   };
+    string regionControlInterface(Region * selectedRegion) {
+//        cout << endl << ">>> "  << selectedRegion -> name << " <<<" << endl;
+
+        selectedRegion->displayStats();
+
+        cout << endl << " Options:" << endl;
+
+        cout << endl << "1: Transfer resources to another region" << endl;
+        cout << "2: Defence army overview" << endl;
+        cout << "3: Infrastructure upgrade" << endl;
+
+        cout << "4: Back" << endl;
+        cout << "5: Back to main" << endl;
+
+        char userCommand;
+        cin >> userCommand;
+
+        switch (userCommand) {
+            case ('1'): {
+                Region * destinationRegion;
+
+                cout << endl << "Select destination region" << endl;
+                destinationRegion = inputRegion(); //to-do implement a function not to output a particular element;
+                resourceTransfer(selectedRegion,destinationRegion);
+                return "back to region selection";  }
+
+            case ('2'): {
+                cout << "Not implemented yet" << endl;
+                break;
+                }
+
+            case ('3'): {
+                cout << "Not implemented yet" << endl;
+                break;
+            }
+
+            case ('4'): {
+                return "back to region selection";
+                break;
+            }
+
+            case ('5'): {
+                return "back to main menu";
+                break;
+            }
+
+
+
+        }
+
+
+
+
+    }
 
     void addNewRegion(Region region) {};
     void loseRegion (Region region) {};

@@ -8,6 +8,7 @@
 
 #include "Country.h"
 #include <array>
+#include <map>
 
 
 class Manager {
@@ -21,123 +22,130 @@ public:
     string allRegionMap;
 
 
+    void sendDiplomacy (Country * issuer) {
 
-    void sendDiplomacy () {
+        map <string, Country*> countriesMap;
+        int index = 1;
+        string key;
+        string userInput;
+        string userMessage;
 
-        countries.at(0)->diplomacyRequest(countries.at(0), countries.at(1), "Hello" , true, false,
-                false, false, 0, 1000, 1, 2, 3, 4);
+        for (int i = 0; i < countries.size(); i ++) {
+            // Creates a map container of enumerated active countries;
+            if (countries[i] != NULL && countries[i] != issuer) {
+
+                key = to_string(index);
+                countriesMap[key] = countries[i];
+                index++;
+            }
+        }
+
+        cout << "Select recipient country:" << endl;
+        // to-do Input validation
+        for (map<string, Country*>::iterator it = countriesMap.begin(); it != countriesMap.end(); it++) {
+            cout << it->first << ": " << it->second->countryName << endl;
+        }
+
+        cin >> userInput;
+
+//        cout << countriesMap[userInput]->countryName << endl;
+
+
+
+        cout << "Your message to " << countriesMap[userInput]->countryName << ": ";
+
+        //cout<< "debug1";
+        cin.ignore();
+        std::getline(std::cin,userMessage);
+        //cout<<"debug2";
+
+
+        cout << endl << " --- " <<userMessage;
+
+
+
+        DiplomacyRequest *request = new DiplomacyRequest(issuer, countriesMap[userInput], userMessage , true, false,
+               false, false, 0, 1000, 1, 2, 3, 4, 2);
+        // to-do is this pointer deleted after the function is terminated?
+
+        countriesMap[userInput]->pendingDiplomacy.push_back(request);
+
+        return;
+
     }
 
-    void initCountries( ) {
-        /** A method to initialise a country after a user has chosen a country by the name.
-         * Input is the string that is passed to the function after the user selected his country.
-         * The country is initialised with pre-determined regions based on the user's choice of the country.
-         * Once the Country object has been initialised, it is appended to the vector activeCountries;
+    void controlInterface(Country *countryInControl) {
+        /** A function to provide player with a control interface of his country.
+         * The mainLoop() passes a Country object into argument of the function
+         * where the user gets to enter commands to invoke functions which alter the
+         * state of the program.
+         *
+         * Loop operates in the function which lets the user enter commands until
+         * the procedure to switch the turn is called.
+         *
          */
 
-        string userInput;
-        int userInputCounter = 0; // Counts how many times a user has entered valid input
-        bool isInputValid;
 
-        array <string, 5> validInputs = {"West", "North", "South", "East", "Next"};
+        cout << "[ "<< Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl;
+        cout << "Commands available" << endl;
+        cout << "end: Call destructor" << endl;
+        cout << "et: End turn" << endl;
+        cout << "dr: Diplomacy Request" << endl;
+        cout << "ddr: Display pending diplomacy requests" << endl;
+        cout << "d_reg: Display regions" << endl;
+
+        string command;
+
+        while (true == true) {  // MAINLOOP
+            cout << "Your command: ";
+            cin  >> command;
+            cout << endl;
 
 
-        cout << "Select a country: ";
+            if (command == "end") {
+                Manager::~Manager();
+                return;
 
+            } else if (command == "et") {
+                return;
 
-        do { // USER INPUT LOOP
-        // Max 4 iterations of a valid input, userInputCounter keeps track of that
+            } else if (command == "dr") {
+                sendDiplomacy(countryInControl);
 
-            for (int i = 0; i < validInputs.size(); i++) {
-                if (validInputs[i] != "") {
-                    // Condition to check which countries haven't been selected yet
-                    // and output them.
-                    cout << " > " << validInputs[i] ;
+            } else if (command == "ddr") {
+                // to-do implement as a function;
+                for (int i = 0; i < countryInControl->pendingDiplomacy.size(); ++i) {
+                    cout << endl;
+                    cout << "From: " << countryInControl->pendingDiplomacy.at(i)->issuerCountry->countryName << endl;
+                    cout << "Message: " << endl << countryInControl->pendingDiplomacy.at(i)->getMessage() << endl;
                 }
-            }
-            cout << " to exit" << endl;
-            cin >> userInput;
+                cout << endl;
 
-            // Checking weather or not the user input is in the list of valid input
-            isInputValid = find(begin(validInputs), end(validInputs), userInput) != end(validInputs);
+            } else if (command == "d_reg") {
+                Region * selectedRegion;
+                string functionOutcome;
 
-            if (isInputValid == false) {
-                cout << "Invalid input, try again"<< endl;
-                continue;}
-
-            //  STARTS PROCESSING OF VALID INPUT
-
-            for (int i = 0; i < validInputs.size(); i++) {
-                // Replacing the matching value in the input list with ""
-                if (validInputs[i] == userInput) {validInputs[i] = "";}
-            }
-
-            if(userInput == "West") {
-
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(ALL_REGIONS[0], ALL_REGIONS[1], "West");
-                // The country is included into the Manager class' countries vector.
-                countries[3] = outCountry;
-
-
-            } else if( userInput == "East") {
-
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(ALL_REGIONS[2], ALL_REGIONS[3],"East");
-                // The country is included into the Manager class' countries vector.
-                countries[0] = outCountry;
-
-            } else if( userInput == "North") {
-
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(ALL_REGIONS[4], ALL_REGIONS[5], "North");
-                // The country is included into the Manager class' countries vector.
-                countries[1] = outCountry;
-
-            } else  if (userInput == "South"){
-
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(ALL_REGIONS[6], ALL_REGIONS[7], "South");
-                // The country is included into the Manager class' countries vector.
-                countries[2] = outCountry;
-            }
-
-            ++userInputCounter;
-
-        } while ((userInputCounter < 4) && (userInput != "Next"));
-
-        Manager::countriesInGame = userInputCounter; // Save the quantity of initialised countries
-
-
-        fillNeutralCountries(); // Procedure to set all the initialised countries neutral to each other.
-
-    };
-
-    void fillNeutralCountries () {
-        /**A procedure to set all the initialised countries neutral to each other. */
-
-        // to-do could it be done with ranged for?
-
-        for (int i = 0; i < countries.size(); i++) {
-            // In range of pointers to all active countries, where each pointer to a country is i,
-            // If i points to NULL, then next iteration, else
-            // In range of all active countries, where each country is j,
-            // If j points to NULL, then next iteration, else
-            // If i is not equal to j, then
-            // include the pointer to the country j into the country's i vector of pointers to neutral countries.
-
-            if (countries[i] == NULL) { continue; }
-
-            for (int j = 0; j < countries.size(); j++) {
-
-                if (i != j && countries[j] != NULL) {
-                    countries[i]->neutral.push_back(countries[j]);
+                do {
+                    selectedRegion = countryInControl->inputRegion();
+                    if (selectedRegion == NULL) { break;}
+                    functionOutcome = countryInControl->regionControlInterface(selectedRegion);
                 }
-            }
+                while (functionOutcome == "back to region selection");
+
+
+//                if (selectedRegion == NULL) {
+//                    continue;
+//                } else { selectedRegion->displayStats(); }
+
+            }else {
+                cout << "Unknown Command, try again" << endl << endl;
+            };
+
         }
     }
 
-    void howManyCountries () {cout << countries.size();}
+//  ###############################
+//  ####### INITIALISATION ########
 
     void initRegions() {
         /** Initialisation of class Region objects which have pre-determined member values.
@@ -167,44 +175,119 @@ public:
             }
         }
     };
-
-    void turnInterfaceFor (Country countryInControl) {
-        /** A function to provide player with a control interface of his country.
-         * The mainLoop() passes a Country object into argument of the function
-         * where the user gets to enter commands to invoke functions which alter the
-         * state of the program.
-         *
-         * Loop operates in the function which lets the user enter commands until
-         * the procedure to switch the turn is called.
-         *
+    void initCountries() {
+        /** A method to initialise a country after a user has chosen a country by the name.
+         * Input is the string that is passed to the function after the user selected his country.
+         * The country is initialised with pre-determined regions based on the user's choice of the country.
+         * Once the Country object has been initialised, it is appended to the vector activeCountries;
          */
 
+        string userInput;
+        int userInputCounter = 0; // Counts how many times a user has entered valid input
+        bool isInputValid;
 
-        cout << "[ "<< Manager::turn << " ] >>> " << countryInControl.countryName << " <<<" << endl;
-        cout << "Commands available" << endl;
-        cout << "end - Call destructor" << endl;
-        cout << "et - End turn" << endl;
+        array <string, 5> validInputs = {"West", "North", "South", "East", "Next"};
 
 
-        string command;
+        cout << "Select a country: ";
 
-        while (true == true) {
-            cout << "Your command: ";
-            cin >> command;
 
-            if (command == "end") {
-                Manager::~Manager();
-                return;
+        do { // USER INPUT LOOP
+            // Max 4 iterations of a valid input, userInputCounter keeps track of that
 
-            } else if (command == "et") { return; }
+            for (int i = 0; i < validInputs.size(); i++) {
+                if (validInputs[i] != "") {
+                    // Condition to check which countries haven't been selected yet
+                    // and output them.
+                    cout << " > " << validInputs[i] ;
+                }
+            }
+            cout << " to exit" << endl;
+            cin >> userInput;
 
-            else {
-                cout << "Unknown Command, try again" << endl;
-                continue;
-            };
+            // Checking weather or not the user input is in the list of valid input
+            isInputValid = find(begin(validInputs), end(validInputs), userInput) != end(validInputs);
+
+            if (isInputValid == false) {
+                cout << "Invalid input, try again"<< endl;
+                continue;}
+
+            //  STARTS PROCESSING OF VALID INPUT
+
+            for (int i = 0; i < validInputs.size() - 1; i++) {
+                // Replacing the matching value in the input list with ""
+                if (validInputs[i] == userInput) {validInputs[i] = "";}
+            }
+
+            if(userInput == "West") {
+
+                // A country is initialised with pre-set regions and name
+                Country *outCountry = new Country(&ALL_REGIONS[0], &ALL_REGIONS[1], "West");
+                // The country is included into the Manager class' countries vector.
+                countries[3] = outCountry;
+
+
+            } else if( userInput == "East") {
+
+                // A country is initialised with pre-set regions and name
+                Country *outCountry = new Country(&ALL_REGIONS[2], &ALL_REGIONS[3],"East");
+                // The country is included into the Manager class' countries vector.
+                countries[0] = outCountry;
+
+            } else if( userInput == "North") {
+
+                // A country is initialised with pre-set regions and name
+                Country *outCountry = new Country(&ALL_REGIONS[4], &ALL_REGIONS[5], "North");
+                // The country is included into the Manager class' countries vector.
+                countries[1] = outCountry;
+
+            } else  if (userInput == "South"){
+
+                // A country is initialised with pre-set regions and name
+                Country *outCountry = new Country(&ALL_REGIONS[6], &ALL_REGIONS[7], "South");
+                // The country is included into the Manager class' countries vector.
+                countries[2] = outCountry;
+
+            } else if (userInput == "Next") {
+                if (userInputCounter < 2) {
+                    cout << "At least 2 countries required. You have: " << userInputCounter << endl;
+                    continue;}
+                else { break;}
+            }
+
+            ++userInputCounter;
+
+        } while (userInputCounter < 4) ;
+
+        Manager::countriesInGame = userInputCounter; // Save the quantity of initialised countries
+
+
+
+
+    };
+    void fillNeutralCountries () {
+        /**A procedure to set all the initialised countries neutral to each other. */
+
+        // to-do could it be done with ranged for?
+
+        for (int i = 0; i < countries.size(); i++) {
+            // In range of pointers to all active countries, where each pointer to a country is i,
+            // If i points to NULL, then next iteration, else
+            // In range of all active countries, where each country is j,
+            // If j points to NULL, then next iteration, else
+            // If i is not equal to j, then
+            // include the pointer to the country j into the country's i vector of pointers to neutral countries.
+
+            if (countries[i] == NULL) { continue; }
+
+            for (int j = 0; j < countries.size(); j++) {
+
+                if (i != j && countries[j] != NULL) {
+                    countries[i]->neutral.push_back(countries[j]);
+                }
+            }
         }
     }
-
     void mainLoop() {
         /**
          * Iterate until Manager::activeCountries > 1 {
@@ -222,8 +305,6 @@ public:
 
         int i = 0;
 
-
-
         while (Manager::countriesInGame > 1) {
 
             // to-do implement a function to destruct a Country object and decrement Manager::countriesInGame
@@ -232,7 +313,7 @@ public:
                 i++;
                 continue;}
 
-            turnInterfaceFor(*countries.at(i));
+            controlInterface(countries.at(i));
 
             if (i == countries.size() - 1) {
                 i = 0;
@@ -244,9 +325,11 @@ public:
         }
     };
 
+//  #### END OF INITIALISATION ####
+//  ###############################
+
 
     void formMap() { Region r("rrr"); };
-
     void saveGame();
     void loadGame();
 
@@ -255,6 +338,7 @@ public:
     {
         initRegions();
         initCountries();
+        fillNeutralCountries(); // Procedure to set all the initialised countries neutral to each other.
         mainLoop();
     }
 
@@ -268,9 +352,7 @@ public:
             delete countries[i];
             countries[i] = NULL;
                 // to-do resolve destruction issue
-
             }
-
         }
 
         countriesInGame = 0;

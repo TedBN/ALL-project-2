@@ -1,13 +1,9 @@
 #include <iostream>
-
-
-
 #include <array>
-#include "vector"
+#include <vector>
+#include <string>
 
 #include "Manager.h"
-
-#include <string>
 
 using namespace std;
 
@@ -37,7 +33,6 @@ int main() {
 //    dr.issuerCountry->name = "norm";
 //    cout << dr.issuerCountry->name;
 
-
 //
 //    array <Animal,2> array1;
 //
@@ -50,6 +45,7 @@ int main() {
 
 //
 
+//
 
     Manager startGame;
     cout<<"TERMINATED!!!";
