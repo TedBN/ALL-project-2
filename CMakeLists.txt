@@ -8,6 +8,6 @@ set(SOURCE_FILES
         main.cpp
         Manager.h
         MilitaryUnit.h
-        Region.h Test/T1.h Test/T2.h Test/T3.h Test/T4.h)
+        Region.h)
 
 add_executable(ALL_project_2 ${SOURCE_FILES})
