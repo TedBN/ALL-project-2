@@ -15,157 +15,17 @@ class Manager {
 
 public:
 
-    int turn = 1; // Keeps track of the current turn;
-    int countriesInGame; // Quantity of currently active countries
-    array  <Region, 8> ALL_REGIONS;
-    array <Country*,4> countries = {NULL, NULL, NULL, NULL};
-    string allRegionMap;
+//  ##################
+//  ### ATTRIBUTES ###
 
+    int turn = 1;               // Keeps track of the current turn;
+    int countriesInGame;        // Quantity of currently active countries
+    array   <Region, 8>         ALL_REGIONS;
+    array   <Country *, 4>     countries = {NULL, NULL, NULL, NULL};
 
-    void sendDiplomacy (Country * issuer) {
+//  ##################
 
-        map <string, Country*> countriesMap;
-        int index = 1;
-        string key;
-        string userInput;
-        string userMessage;
-
-        for (int i = 0; i < countries.size(); i ++) {
-            // Creates a map container of enumerated active countries;
-            if (countries[i] != NULL && countries[i] != issuer) {
-
-                key = to_string(index);
-                countriesMap[key] = countries[i];
-                index++;
-            }
-        }
-
-        cout << "Select recipient country:" << endl;
-        // to-do Input validation
-        for (map<string, Country*>::iterator it = countriesMap.begin(); it != countriesMap.end(); it++) {
-            cout << it->first << ": " << it->second->countryName << endl;
-        }
-
-        cin >> userInput;
-
-//        cout << countriesMap[userInput]->countryName << endl;
-
-
-
-        cout << "Your message to " << countriesMap[userInput]->countryName << ": ";
-
-        cin.ignore();
-        std::getline(std::cin,userMessage);
-
-
-
-        DiplomacyRequest *request = new DiplomacyRequest(issuer, countriesMap[userInput], userMessage , true, false,
-               false, false, 0, 1000, 1, 2, 3, 4, 2);
-        // to-do is this pointer deleted after the function is terminated?
-
-        countriesMap[userInput]->pendingDiplomacy.push_back(request);
-
-        return;
-
-    }
-
-    void controlInterface(Country *countryInControl) {
-        /** A function to provide player with a control interface of his country.
-         * The mainLoop() passes a Country object into argument of the function
-         * where the user gets to enter commands to invoke functions which alter the
-         * state of the program.
-         *
-         * Loop operates in the function which lets the user enter commands until
-         * the procedure to switch the turn is called.
-         *
-         */
-
-
-        cout << "[ "<< Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl << endl;
-
-        cout << "1: Make a diplomacy request" << endl;
-        cout << "2: Display pending diplomacy requests [" << countryInControl->pendingDiplomacy.size() << "]" << endl;
-        cout << "3: Display regions" << endl;
-        cout << "4: End turn" << endl;
-
-        char command;
-
-        while (true == true) {  // MAINLOOP
-            cout << endl << "Your command: ";
-            cin >> command;
-            cout << endl;
-
-            switch (command) {
-                case ('1'): {
-                    sendDiplomacy(countryInControl);
-                    break;
-                }
-                case ('2'): {
-                    // to-do implement as a function;
-                    for (int i = 0; i < countryInControl->pendingDiplomacy.size(); ++i) {
-                        cout << endl;
-                        cout << "From: " << countryInControl->pendingDiplomacy.at(i)->issuerCountry->countryName
-                             << endl;
-                        cout << "Message: " << endl << countryInControl->pendingDiplomacy.at(i)->getMessage() << endl;
-                    }
-                    break;
-                }
-                case ('3'): {
-                    Region *selectedRegion;
-                    string functionOutcome;
-
-                    do {
-                        selectedRegion = countryInControl->inputRegion(NULL);
-                        if (selectedRegion == NULL) { break; }
-                        functionOutcome = countryInControl->regionControlInterface(selectedRegion);
-                    } while (functionOutcome == "back to region selection");
-                    break;
-                }
-                case ('4'): {
-                    return;
-                }
-
-
-            }
-
-        }
-
-//            if (command == "end") {
-//                Manager::~Manager();
-//                return;
-//
-//            } else if (command == "et") {
-//                return;
-//
-//            } else if (command == "dr") {
-//
-//
-//            } else if (command == "ddr") {
-//                // to-do implement as a function;
-//                for (int i = 0; i < countryInControl->pendingDiplomacy.size(); ++i) {
-//                    cout << endl;
-//                    cout << "From: " << countryInControl->pendingDiplomacy.at(i)->issuerCountry->countryName << endl;
-//                    cout << "Message: " << endl << countryInControl->pendingDiplomacy.at(i)->getMessage() << endl;
-//                }
-//                cout << endl;
-//
-//            } else if (command == "d_reg") {
-//
-//
-//
-////                if (selectedRegion == NULL) {
-////                    continue;
-////                } else { selectedRegion->displayStats(); }
-//
-//            }else {
-//                cout << "Unknown Command, try again" << endl << endl;
-//            };
-//
-//        }
-    }
-
-//  ###############################
-//  ####### INITIALISATION ########
+//  ### INITIALISATION ###
 
     void initRegions() {
         /** Initialisation of class Region objects which have pre-determined member values.
@@ -176,26 +36,50 @@ public:
             // to-do would there be a benefit from dynamic initialisation?
 
             switch (i) {
-                case 0: { Region region0("Region_0"); ALL_REGIONS[i] = region0;
+                case 0: {
+                    Army *army = new Army;
+                    Region region0("Region_0", army);
+                    ALL_REGIONS[i] = region0;
                     break;}
-                case 1: { Region region1("Region_1"); ALL_REGIONS[i] = region1;
+                case 1: {
+                    Army *army = new Army;
+                    Region region1("Region_1", army);
+                    ALL_REGIONS[i] = region1;
                     break;}
-                case 2: { Region region2("Region_2"); ALL_REGIONS[i] = region2;
+                case 2: {
+                    Army *army = new Army;
+                    Region region2("Region_2", army);
+                    ALL_REGIONS[i] = region2;
                     break;}
-                case 3: { Region region3("Region_3"); ALL_REGIONS[i] = region3;
+                case 3: {
+                    Army *army = new Army;
+                    Region region3("Region_3", army);
+                    ALL_REGIONS[i] = region3;
                     break;}
-                case 4: { Region region4("Region_4"); ALL_REGIONS[i] = region4;
+                case 4: {
+                    Army *army = new Army;
+                    Region region4("Region_4", army);
+                    ALL_REGIONS[i] = region4;
                     break;}
-                case 5: { Region region5("Region_5"); ALL_REGIONS[i] = region5;
+                case 5: {
+                    Army *army = new Army;
+                    Region region5("Region_5", army);
+                    ALL_REGIONS[i] = region5;
                     break;}
-                case 6: { Region region6("Region_6"); ALL_REGIONS[i] = region6;
+                case 6: {
+                    Army *army = new Army;
+                    Region region6("Region_6", army);
+                    ALL_REGIONS[i] = region6;
                     break;}
-                case 7: { Region region7("Region_7"); ALL_REGIONS[i] = region7;
+                case 7: {
+                    Army *army = new Army;
+                    Region region7("Region_7", army);
+                    ALL_REGIONS[i] = region7;
                     break;}
             }
         }
-    };
-    void initCountries() {
+    }      //   init_Regions()
+    void init_Countries() {
         /** A method to initialise a country after a user has chosen a country by the name.
          * Input is the string that is passed to the function after the user selected his country.
          * The country is initialised with pre-determined regions based on the user's choice of the country.
@@ -286,8 +170,8 @@ public:
 
 
 
-    };
-    void fillNeutralCountries () {
+    }   //   init_Countries()
+    void fill_Neutral() {
         /**A procedure to set all the initialised countries neutral to each other. */
 
         // to-do could it be done with ranged for?
@@ -309,7 +193,7 @@ public:
                 }
             }
         }
-    }
+    }     //   fill_Neutral()
     void mainLoop() {
         /**
          * Iterate until Manager::activeCountries > 1 {
@@ -335,7 +219,7 @@ public:
                 i++;
                 continue;}
 
-            controlInterface(countries.at(i));
+            C_ControlInterf(countries.at(i));
 
             if (i == countries.size() - 1) {
                 i = 0;
@@ -345,13 +229,419 @@ public:
             i++;
 
         }
+    };        //   MAINLOOP
+
+
+//  ###    DIPLOMACY   ###
+
+    void    new_DRequest     (Country *issuer) {
+// to-do exceptions management for input validation cin >> energy
+        Country *recipient;
+        char userInput;
+        string userMessage;
+
+        bool formAlliance = false;
+        bool ceasefire = false;
+        int aPassRight = 0;
+
+        int metal = 0;
+        int oil = 0;
+        int energy = 0;
+
+        int periodOfValidity = 1;
+
+        recipient = input_Country(issuer);
+        if (recipient == NULL) { return;}
+
+        while (true) {
+
+            // to-do what is the effective way to do it so that enumeration changes as an option disappears??
+
+            cout << endl << "1: Offer to " << recipient->countryName << endl;
+            cout << "2: Demand from " << recipient->countryName << endl;
+            cout << "3: Add message" << endl;
+            cout << "4: Confirm" << endl;
+            cout << "5: Cancel" << endl;
+
+            cin >> userInput;
+
+            while (true) {
+                switch (userInput) {
+                    case ('1') : {
+                        char userSubInput;
+
+                        if (not formAlliance) {cout << endl << "1: Form alliance " << endl;}
+                        if (not ceasefire) {cout << "2: Cease of hostility" << endl;}
+                        cout << "3: Send energy" << endl;
+                        cout << "4: Send metal" << endl;
+                        cout << "5: Sent oil" << endl;
+                        cout << "6: Reset" << endl;
+                        cout << "7: Back" << endl;
+
+                        cin >> userSubInput;
+
+                        switch (userSubInput) {
+                            case ('1'): {
+                                formAlliance = true;
+                                continue;
+                            }
+                            case ('2'): {
+                                ceasefire = true;
+                                continue;
+                            }
+                            case ('3'): {
+                                cin >> energy;
+                                continue;
+                            }
+                            case ('4'): {
+                                cin >> metal;
+                                continue;
+                            }
+                            case ('5'): {
+                                cin >> oil;
+                                continue;
+                            }
+                            case ('6'): {
+                                formAlliance = false;
+                                ceasefire = false;
+                                aPassRight = 0;
+
+                                metal = 0;
+                                oil = 0;
+                                energy = 0;
+                                continue;
+                            }
+                            case ('7'): {
+                                break;
+                            }
+
+
+                        }
+                    }
+                    case ('2'): {
+                        char userSubInput;
+
+                        if (aPassRight == 0) {cout << endl << "1: Request military access" << endl;}
+                        cout << "2: Demand energy" << endl;
+                        cout << "3: Demand metal" << endl;
+                        cout << "4: Demand oil" << endl;
+                        cout << "5: Reset" << endl;
+                        cout << "6: Back" << endl;
+
+                        cin >> userSubInput;
+
+                        switch (userSubInput) {
+                            case ('1'): {
+                                cout << "Amount of turns: " ;
+                                cin >> aPassRight;
+                                if (aPassRight < 0) {
+                                    aPassRight =0;
+                                }
+                                continue;
+                            }
+                            case ('2'): {
+                                cin >> energy;
+                                energy = -energy;
+                                continue;
+                            }
+                            case ('3'): {
+                                cin >> metal;
+                                metal = -metal;
+                                continue;
+                            }
+                            case ('4'): {
+                                cin >> oil;
+                                oil = -oil;
+                                continue;
+                            }
+                            case ('5'): {
+
+                                aPassRight = 0;
+
+                                metal = 0;
+                                oil = 0;
+                                energy = 0;
+                                continue;
+                            }
+                            case ('6'): {
+                                break;
+                            }
+
+
+                        }
+
+
+                    }
+
+                    case ('3'): {
+                        cout << "Your message to: " << recipient->countryName << endl;
+                        cin.ignore();
+                        std::getline(std::cin,userMessage);
+                    }
+
+                    case ('4'): {
+                        char userSubInput;
+                        cout << endl << "Summary: " << endl;
+                        if (formAlliance) {cout << endl << "> Form alliance " << endl;}
+                        if (ceasefire) {cout << "> Cease of hostility" << endl;}
+
+                        cout << endl << "Offer: " << endl << endl;
+                        if (metal > 0) { cout << "Metal: " << metal << endl;}
+                        if (energy > 0) { cout << "Energy: " << energy << endl;}
+                        if (oil > 0) { cout << "Oil: " << oil << endl;}
+
+                        cout << endl << "1: Confirm" << endl;
+                        cout << endl << "2: Back" << endl;
+                        cin >> userSubInput;
+
+                        switch (userSubInput) {
+                            case ('1'): {
+                                cout << "Enter period of validity: ";
+                                cin >> periodOfValidity;
+                                if (periodOfValidity < 1) {
+                                    cout << "Period of validity set to 1" << endl;
+                                    periodOfValidity = 1;}
+
+                                DiplomacyRequest * dr = new DiplomacyRequest(issuer,recipient,userMessage,formAlliance,
+                                ceasefire,aPassRight, metal, oil, energy, periodOfValidity);
+
+                                issuer -> sentDiplomacyRequests.push_back(dr);
+                                recipient -> incomingDiplomacyRequests.push_back(dr);
+                            }
+
+                            case ('2'): {
+                                continue; }
+                        }
+                    }
+                    case ('5'): {
+                        return;}
+                }
+            }
+
+        }
+
+
+    }
+    void    D_ControlInterf  (Country *countryInControl) {
+        /** The function will provide a country object with information on received, sent, accepted diplomacy request
+         * and let compose a new request.
+         */
+
+        do {
+            cout << endl << "1: Treaty Report" << endl;
+            cout << "2: Sent Requests" << endl;
+            cout << "3: Received Requests [" << countryInControl->incomingDiplomacyRequests.size() << "]" << endl;
+            cout << "4: Compose new request" << endl;
+            cout << "5: Main Menu" << endl << "->";
+
+            char userSelection;
+            cin >> userSelection;
+
+            switch (userSelection) {
+                case ('1'): {
+                    // MILITARY ACCESS TREATIES
+                    for (MilitaryAccess *ma : countryInControl->accessRights) {
+                        ma->coutMyself();
+                    }
+                    cout << endl;
+                    // WAR TREATIES
+                    for (Country *c : countryInControl->enemies) {
+                        cout << "At war with: " << c->countryName;
+                    }
+                    // ALLIED COUNTRIES
+                    for (Country *c : countryInControl->allies) {
+                        cout << "Alliance treaty with: " << c->countryName;
+                    }
+
+                    continue;
+
+//                    char userSubSelection;
+//                    cout << endl << "1: Continue" << endl;
+//                    cin >> userSubSelection;
+//                    if (userSubSelection == '1') {
+//                        continue;
+//                    }
+                }
+
+                case ('2'): {
+                    for (DiplomacyRequest *dr : countryInControl->sentDiplomacyRequests) {
+                        cout << endl << "Sent to: " << dr->recipientCountry->countryName;
+                        dr->coutReportOfConditions();
+                        if (countryInControl->sentDiplomacyRequests.size() == 0 ) {
+                            cout << "Nothing to display" << endl;
+                        }
+
+
+                    }
+                    continue;
+
+                }
+
+                case ('3'): {
+                    for (DiplomacyRequest *dr : countryInControl->incomingDiplomacyRequests) {
+                        cout << endl << "Received from " << dr->issuerCountry->countryName;
+                        dr->coutReportOfConditions();
+                    }
+                    continue;
+                }
+
+                case ('4'): {
+                    new_DRequest(countryInControl);
+                    continue;
+                }
+
+
+                case ('5'): {
+                    return;
+                }
+
+
+            }
+
+        } while (true);
+    }
+
+//  ### COUNTRY CONTROL ###
+
+    map < string, Country* >   countries_to_map(Country *inCountry) {
+        /** A function to convert the "countries" array into a map structure where the string
+         * key denotes its position in the array;
+         *
+         *  The function won't include the value in the function's argument into the output map.
+         */
+        map <string, Country *> countriesAsMap;
+        string key;
+
+        vector <Country*> conditionedCountries; //
+
+        // A loop to detect if any pointer in "regions" match to the parameter "inRegion"
+        // to avoid inclusion of the match.
+        for (int j = 0; j < countries.size(); j++) {
+
+            // A condition to only include the pointers which don't match the input parameter
+            if (countries.at(j) != inCountry && countries[j] != NULL ) {
+                conditionedCountries.push_back(countries.at(j));
+            }
+        };
+
+        // Creating map structure
+        for (int i = 1; i < conditionedCountries.size() + 1; i ++) {
+
+            key = to_string(i);
+            countriesAsMap[key] = conditionedCountries.at(i - 1);
+        }
+        return countriesAsMap;
+    }
+    Country*                 input_Country   (Country *inCountry) {
+        /** The function which will display the content of "countries" vector, structurised as a map where the keys
+         * denote the position of an object in the array.
+         *
+         * The objects matching the address "inCountry" won't be displayed.
+         *
+         * Displayable countries are obtained by calling the function "structuriseCountriesAsMap";
+         * The returned values are displayed.
+         * An user inputs a digit which represents his choice of the country.
+         * Input digit is validated.
+         * If is valid the corresponding country will be returned.
+         */
+        map <string, Country *> countriesAsMap = countries_to_map(inCountry); // Calling function to obtain displayable regions
+        string userInput;
+        bool isInputValid = false;
+
+        cout << "Select a country" << endl;
+
+
+
+        for (auto& kv : countriesAsMap) { // DISPLAYING THE CONTENT OF THE STD::MAP
+            cout << kv.first << ": " << kv.second->countryName << endl;
+        }
+        cout << countriesAsMap.size() + 1 << ": " << "< Back <" << endl; // DISPLAYING THE OPTION TO RETURN TO THE PREVIOUS MENU.
+
+        while (isInputValid == false) {  // INPUT VALIDATION
+
+            cout << "-> ";
+            cin >> userInput;
+            isInputValid = countriesAsMap.find(userInput) != countriesAsMap.end(); // Whether or not the input is in the map
+
+            if (stoi(userInput) == countriesAsMap.size() + 1 ) { return NULL;} // The user pressed "back" option
+
+            else if (isInputValid == false) {cout << "Invalid input, try again" << endl; }
+
+            else { return countriesAsMap[userInput];} // The pointer is found
+        }
+
+
+
+    }
+
+    void    C_ControlInterf  (Country *countryInControl) {
+        /** A function to provide player with a control interface of his country.
+         * The mainLoop() passes a Country object into argument of the function
+         * where the user gets to enter commands to invoke functions which alter the
+         * state of the program.
+         *
+         * Loop operates in the function which lets the user enter commands until
+         * the procedure to switch the turn is called.
+         *
+         */
+
+        countryInControl->runResourceCollection();
+
+        cout << "[ " << Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl << endl;
+
+        cout << "0: Diplomacy [" << countryInControl->incomingDiplomacyRequests.size() << "]" << endl;
+        cout << "1: Make a diplomacy request" << endl;
+        cout << "2: Display pending diplomacy requests [" << countryInControl->incomingDiplomacyRequests.size() << "]" << endl;
+        cout << "3: Display regions" << endl;
+        cout << "4: End turn" << endl;
+
+        char command;
+
+        while (true == true) {  // MAINLOOP
+            cout << endl << "Your command: ";
+            cin >> command;
+            cout << endl;
+
+            switch (command) {
+
+                case ('0'):
+                    D_ControlInterf(countryInControl);
+
+                case ('1'): {
+                    new_DRequest(countryInControl);
+                    break;
+                }
+                case ('2'): {
+                    // to-do implement as a function;
+                    for (int i = 0; i < countryInControl->incomingDiplomacyRequests.size(); ++i) {
+                        cout << endl;
+                        cout << "From: " << countryInControl->incomingDiplomacyRequests.at(i)->issuerCountry->countryName
+                             << endl;
+                        cout << "Message: " << endl << countryInControl->incomingDiplomacyRequests.at(i)->getMessage() << endl;
+                    }
+                    break;
+                }
+                case ('3'): {
+                    Region *selectedRegion;
+                    string functionOutcome;
+
+                    do {
+                        selectedRegion = countryInControl->inputRegion(NULL);
+                        if (selectedRegion == NULL) { break; }
+                        functionOutcome = countryInControl->regionControlInterface(selectedRegion);
+                    } while (functionOutcome == "back to region selection");
+                    break;
+                }
+                case ('4'): {
+                    return;
+                }
+
+
+            }
+        }
     };
 
-//  #### END OF INITIALISATION ####
-//  ###############################
-
-
-    void formMap() { Region r("rrr"); };
+//  #############################
     void saveGame();
     void loadGame();
 
@@ -359,8 +649,8 @@ public:
     Manager()
     {
         initRegions();
-        initCountries();
-        fillNeutralCountries(); // Procedure to set all the initialised countries neutral to each other.
+        init_Countries();
+        fill_Neutral(); // Procedure to set all the initialised countries neutral to each other.
         mainLoop();
     }
 

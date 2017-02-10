@@ -7,10 +7,6 @@
 #IncludeRegexTransform: 
 
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
-map
--
-vector
--
 Region.h
 /Users/Oscari/My Files/Git/ALL-project-2/Region.h
 
@@ -27,14 +23,16 @@ iostream
 -
 
 /Users/Oscari/My Files/Git/ALL-project-2/Region.h
-fstream
-/Users/Oscari/My Files/Git/ALL-project-2/fstream
 string
-/Users/Oscari/My Files/Git/ALL-project-2/string
+-
 vector
-/Users/Oscari/My Files/Git/ALL-project-2/vector
+-
+map
+-
 MilitaryUnit.h
 /Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
+Country.h
+/Users/Oscari/My Files/Git/ALL-project-2/Country.h
 
 /Users/Oscari/My Files/Git/ALL-project-2/main.cpp
 iostream

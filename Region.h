@@ -6,62 +6,102 @@
 #define EUROPE_AT_WAR_REGION_H
 
 
-
-#include "fstream"
-#include "string"
-#include "vector"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
 
 #include "MilitaryUnit.h"
+#include "Country.h"
 
-class Region;
+using namespace std;
 
+//   PRE - DECLARATION
+class Country;
+class Army;
 
-class Army {
-
-    string name;
-    int health = 100;
-    Region *currentLocation;
-
-    std::vector <MilitaryUnit> landArmy;
-
-public:
-
-    string txt = "I do exist";
-    Army() {}
-
-
-};
+// ### REGION & ARMY ###
 
 class Region {
 
 public:
 
-//    fstream mapFile;
+// ###  ATTRIBUTES ###
 
-    int metalProduction = 50;
-    int oilProduction = 50;
-    int energyProduction = 50;
+    Country * owner;
 
-    int stockPile = 100;
+    int                     metalProduction = 50;
+    int                     oilProduction = 50;
+    int                     energyProduction = 50;
+    int                     stockLimit = 200;
+    int                     metalStock = 50, oilStock = 50, energyStock = 50;
+    std::string             name;
+    std::vector <Army*>     defenceArmies;
+    std::vector <Region*>   contiguousRegions;
 
-    int metalStock = stockPile, oilStock = stockPile, energyStock = stockPile;
-
-    std::string name;
-    std::string colour;
-
-    std::vector <Army*> defenceArmies;
-    std::vector <Region*> contiguousRegions;
-
-    string getMapString (char symbolicRepresentation);
+//  #################
 
 
-    void upgradeStockPile( ) {
+//  ### RESOURCES ###
 
-        int requiredResource = stockPile * 0.75;
+    void                    regionalResourceCollection () {
+        addToEnergyStock(Region::energyProduction);
+        addToMetalStock(Region::metalProduction);
+        addToOilStock(Region::oilProduction);
+    };
+    bool                    checkResourceAvailability(int metal, int oil, int energy) {
+        /** This function will check if the specified amount of resources is available */
+
+        if ( Region::metalStock >= metal  &&  Region::oilStock >= oil &&
+             Region::energyStock >= energy) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    void                    deductResources (int metalStock, int oilStock, int energyStock) {
+        Region::energyStock -= energyStock;
+        Region::metalStock -= metalStock;
+        Region::oilStock -= oilStock;
+
+    }
+    void                    addResources (int metal, int oil, int energy) {
+        addToEnergyStock(energy);
+        addToOilStock(oil);
+        addToMetalStock(metal);
+    }
+    void                    addToMetalStock(int quantity) {
+        Region::metalStock += quantity;
+        if (metalStock > stockLimit) {
+            metalStock = stockLimit;
+        }
+    }
+    void                    addToOilStock(int quantity) {
+        Region::oilStock += quantity;
+        if (oilStock > stockLimit) {
+            oilStock = stockLimit;
+        }
+    }
+    void                    addToEnergyStock(int quantity) {
+        Region::energyStock += quantity;
+        if (energyStock > stockLimit) {
+            energyStock = stockLimit;
+        }
+    }
+
+//  ### REGION CONTROL ###
+
+    void                    upgradeStockCapacity( ) {
+        /** This function edits the attribute "stockLimit" increasing it by 25% if all of the current resources
+         * in stock exceed 74%.
+         */
+
+        int requiredResource = stockLimit * 0.75;
         bool resourcesSufficient = checkResourceAvailability( requiredResource, requiredResource, requiredResource);
 
         if (resourcesSufficient) {
-            stockPile += stockPile * 0.25;
+            stockLimit += stockLimit * 0.25;
             deductResources(requiredResource, requiredResource, requiredResource);
         } else { cout << "Insufficient resources ";
             return;}
@@ -69,29 +109,8 @@ public:
 
 
     }
-
-    bool checkResourceAvailability(int metal, int oil, int energy) {
-        if ( Region::metalStock >= metal  &&  Region::oilStock >= oil &&
-                Region::energyStock >= energy) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    void deductResources (int metalStock, int oilStock, int energyStock) {
-        Region::energyStock -= energyStock;
-        Region::metalStock -= metalStock;
-        Region::oilStock -= oilStock;
-
-    }
-    void addResources (int metalStock, int oilStock, int energyStock) {
-        Region::energyStock += energyStock;
-        Region::metalStock += metalStock;
-        Region::oilStock += oilStock;
-    }
-    void displayStats() {
+    void                    displayStats() {
+        /** The function outputs the state of the object */
 
         cout << endl << ">>" << name << endl;
 
@@ -103,45 +122,53 @@ public:
         cout << "Metal stock: " << metalStock << endl;
         cout << "Oil stock: " << oilStock << endl << endl;
 
-        cout << "Stockpile: " << stockPile << endl << endl;
+        cout << "Stockpile: " << stockLimit << endl << endl;
 
         cout << "Army units: " << defenceArmies.size() << endl ;
     }
 
+// ### ARMY CONTROL ###
+
     void recruitArmy () {
 
-        int requiredResource = stockPile;
-
-        bool resourcesSufficient = checkResourceAvailability( requiredResource, requiredResource, requiredResource);
-
-        if (resourcesSufficient) {
-            Army * newArmy = new Army;
-            Region::defenceArmies.push_back(newArmy);
-            deductResources(requiredResource, requiredResource, requiredResource);
-
-        } else {
-            cout << "Insufficient resources ";
-            return;}
-
-    }
-
-    void controlRegion() {
-
+//        int requiredResource = stockLimit;
+//
+//        bool resourcesSufficient = checkResourceAvailability( requiredResource, requiredResource, requiredResource);
+//
+//        if (resourcesSufficient) {
+//            Army * newArmy = new Army;
+//            Region::defenceArmies.push_back(newArmy);
+//            deductResources(requiredResource, requiredResource, requiredResource);
+//
+//        } else {
+//            cout << "Insufficient resources ";
+//            return;}
 
     }
 
-    struct giveResourcesToCountry {  };
-
-    void formArmy();
-
-    Region(const string &name) : name(name) {Army *army = new Army; defenceArmies.push_back(army);}
-
+// ### CONSTRUCTORS ###
+    Region(const string &name, Army * defenceArmy) : name(name) { defenceArmies.push_back(defenceArmy); }
     Region() {}
+    virtual ~Region() {}
+};
+//  ####################
 
-    virtual ~Region() {
-    }
+class Army {
+
+public:
+// ###  ATTRIBUTES ###
+
+    int         health = 100;
+    string      name;
+    Region*     currentLocation;
+    Country*    owner;
+    vector <MilitaryUnit> landArmy;
+
+// ### CONSTRUCTORS ###
+
+    Army() {}
 
 };
-
+//  ####################
 
 #endif //EUROPE_AT_WAR_REGION_H
