@@ -18,20 +18,20 @@ public:
 //  ##################
 //  ### ATTRIBUTES ###
 
-    int turn = 1;               // Keeps track of the current turn;
-    int countriesInGame;        // Quantity of currently active countries
-    array   <Region, 8>         ALL_REGIONS;
-    array   <Country *, 4>     countries = {NULL, NULL, NULL, NULL};
+    int                     turn = 1;               // Keeps track of the current turn;
+    int                     countriesInGame;        // Quantity of currently active countries
+    array   <Region, 8>     all_Regions;
+    array   <Country *, 4>  countries = {NULL, NULL, NULL, NULL};
 
 //  ##################
 
 //  ### INITIALISATION ###
 
-    void initRegions() {
+    void                    initRegions() {
         /** Initialisation of class Region objects which have pre-determined member values.
          */
 
-        for (int i = 0; i < ALL_REGIONS.size(); i++) {
+        for (int i = 0; i < all_Regions.size(); i++) {
 
             // to-do would there be a benefit from dynamic initialisation?
 
@@ -39,47 +39,47 @@ public:
                 case 0: {
                     Army *army = new Army;
                     Region region0("Region_0", army);
-                    ALL_REGIONS[i] = region0;
+                    all_Regions[i] = region0;
                     break;}
                 case 1: {
                     Army *army = new Army;
                     Region region1("Region_1", army);
-                    ALL_REGIONS[i] = region1;
+                    all_Regions[i] = region1;
                     break;}
                 case 2: {
                     Army *army = new Army;
                     Region region2("Region_2", army);
-                    ALL_REGIONS[i] = region2;
+                    all_Regions[i] = region2;
                     break;}
                 case 3: {
                     Army *army = new Army;
                     Region region3("Region_3", army);
-                    ALL_REGIONS[i] = region3;
+                    all_Regions[i] = region3;
                     break;}
                 case 4: {
                     Army *army = new Army;
                     Region region4("Region_4", army);
-                    ALL_REGIONS[i] = region4;
+                    all_Regions[i] = region4;
                     break;}
                 case 5: {
                     Army *army = new Army;
                     Region region5("Region_5", army);
-                    ALL_REGIONS[i] = region5;
+                    all_Regions[i] = region5;
                     break;}
                 case 6: {
                     Army *army = new Army;
                     Region region6("Region_6", army);
-                    ALL_REGIONS[i] = region6;
+                    all_Regions[i] = region6;
                     break;}
                 case 7: {
                     Army *army = new Army;
                     Region region7("Region_7", army);
-                    ALL_REGIONS[i] = region7;
+                    all_Regions[i] = region7;
                     break;}
             }
         }
     }      //   init_Regions()
-    void init_Countries() {
+    void                    init_Countries() {
         /** A method to initialise a country after a user has chosen a country by the name.
          * Input is the string that is passed to the function after the user selected his country.
          * The country is initialised with pre-determined regions based on the user's choice of the country.
@@ -128,7 +128,7 @@ public:
             if(userInput == "West" ) {
 
                 // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&ALL_REGIONS[0], &ALL_REGIONS[1], "West");
+                Country *outCountry = new Country(&all_Regions[0], &all_Regions[1], "West");
                 // The country is included into the Manager class' countries vector.
                 countries[3] = outCountry;
 
@@ -136,21 +136,21 @@ public:
             } else if( userInput == "East") {
 
                 // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&ALL_REGIONS[2], &ALL_REGIONS[3],"East");
+                Country *outCountry = new Country(&all_Regions[2], &all_Regions[3],"East");
                 // The country is included into the Manager class' countries vector.
                 countries[0] = outCountry;
 
             } else if( userInput == "North") {
 
                 // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&ALL_REGIONS[4], &ALL_REGIONS[5], "North");
+                Country *outCountry = new Country(&all_Regions[4], &all_Regions[5], "North");
                 // The country is included into the Manager class' countries vector.
                 countries[1] = outCountry;
 
             } else  if (userInput == "South"){
 
                 // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&ALL_REGIONS[6], &ALL_REGIONS[7], "South");
+                Country *outCountry = new Country(&all_Regions[6], &all_Regions[7], "South");
                 // The country is included into the Manager class' countries vector.
                 countries[2] = outCountry;
 
@@ -171,7 +171,7 @@ public:
 
 
     }   //   init_Countries()
-    void fill_Neutral() {
+    void                    fill_Neutral() {
         /**A procedure to set all the initialised countries neutral to each other. */
 
         // to-do could it be done with ranged for?
@@ -194,7 +194,7 @@ public:
             }
         }
     }     //   fill_Neutral()
-    void mainLoop() {
+    void                    mainLoop() {
         /**
          * Iterate until Manager::activeCountries > 1 {
          *
@@ -234,7 +234,7 @@ public:
 
 //  ###    DIPLOMACY   ###
 
-    void    new_DRequest     (Country *issuer) {
+    void                    new_DRequest     (Country *issuer) {
 // to-do exceptions management for input validation cin >> energy
         Country *recipient;
         char userInput;
@@ -422,7 +422,7 @@ public:
 
 
     }
-    void    D_ControlInterf  (Country *countryInControl) {
+    void                    D_ControlInterf  (Country *countryInControl) {
         /** The function will provide a country object with information on received, sent, accepted diplomacy request
          * and let compose a new request.
          */
@@ -503,7 +503,7 @@ public:
 
 //  ### COUNTRY CONTROL ###
 
-    map < string, Country* >   countries_to_map(Country *inCountry) {
+    map <string, Country*> countries_to_map(Country *inCountry) {
         /** A function to convert the "countries" array into a map structure where the string
          * key denotes its position in the array;
          *
@@ -532,7 +532,7 @@ public:
         }
         return countriesAsMap;
     }
-    Country*                 input_Country   (Country *inCountry) {
+    Country*                input_Country   (Country *inCountry) {
         /** The function which will display the content of "countries" vector, structurised as a map where the keys
          * denote the position of an object in the array.
          *
@@ -574,7 +574,7 @@ public:
 
     }
 
-    void    C_ControlInterf  (Country *countryInControl) {
+    void                    C_ControlInterf  (Country *countryInControl) {
         /** A function to provide player with a control interface of his country.
          * The mainLoop() passes a Country object into argument of the function
          * where the user gets to enter commands to invoke functions which alter the
@@ -642,8 +642,8 @@ public:
     };
 
 //  #############################
-    void saveGame();
-    void loadGame();
+    void                    saveGame();
+    void                    loadGame();
 
 
     Manager()
