@@ -7,9 +7,6 @@
 
 
 #include "Country.h"
-#include <array>
-#include <map>
-
 
 class Manager {
 
@@ -22,8 +19,6 @@ public:
     int                     countriesInGame;        // Quantity of currently active countries
     array   <Region, 8>     all_Regions;
     array   <Country *, 4>  countries = {NULL, NULL, NULL, NULL};
-
-//  ##################
 
 //  ### INITIALISATION ###
 
@@ -93,23 +88,29 @@ public:
         array <string, 5> validInputs = {"West", "North", "South", "East", "Continue"};
 
 
-        cout << "Select a country: " << endl ;
+        cout << "Select a country: " ;
 
 
         do { // USER INPUT LOOP
+
             // Max 4 iterations of a valid input, userInputCounter keeps track of that
 
             for (int i = 0; i < validInputs.size(); i++) {
                 if (validInputs[i] != "") {
                     // Condition to check which countries haven't been selected yet
                     // and output them.
-                    cout << validInputs[i] <<endl;
+                    if (validInputs[i] == "Continue") {
+                        cout << endl << "   " << validInputs[i];
+                    } else {
+                        cout << endl << " > " << validInputs[i];
+                    }
                 }
             }
 
+            cout << " >" << endl;
             cout << "-> ";
             cin >> userInput;
-            cout << endl;
+
 
             // Checking weather or not the user input is in the list of valid input
             isInputValid = find(begin(validInputs), end(validInputs), userInput) != end(validInputs);
@@ -231,7 +232,6 @@ public:
         }
     };        //   MAINLOOP
 
-
 //  ###    DIPLOMACY   ###
 
     void                    new_DRequest     (Country *issuer) {
@@ -257,147 +257,219 @@ public:
 
             // to-do what is the effective way to do it so that enumeration changes as an option disappears??
 
-            cout << endl << "1: Offer to " << recipient->countryName << endl;
-            cout << "2: Demand from " << recipient->countryName << endl;
-            cout << "3: Add message" << endl;
-            cout << "4: Confirm" << endl;
-            cout << "5: Cancel" << endl;
+            diplomacy_main_menu: ; // how else to break out of nested switch
 
+            cout << endl << "| New Diplomacy Request|" << endl;
+            cout << " 1: Offer to " << recipient->countryName << endl;
+            cout << " 2: Demand from " << recipient->countryName << endl;
+            cout << " 3: Add message" << endl;
+            cout << " 4: Summary" << endl;
+            cout << " 5: Confirm and send" << endl;
+            cout << " 6: Discard" << endl;
+            cout << "-> ";
+
+            cin.ignore();
             cin >> userInput;
 
-            while (true) {
+
                 switch (userInput) {
                     case ('1') : {
                         char userSubInput;
 
-                        if (not formAlliance) {cout << endl << "1: Form alliance " << endl;}
-                        if (not ceasefire) {cout << "2: Cease of hostility" << endl;}
-                        cout << "3: Send energy" << endl;
-                        cout << "4: Send metal" << endl;
-                        cout << "5: Sent oil" << endl;
-                        cout << "6: Reset" << endl;
-                        cout << "7: Back" << endl;
+                        while (true) {
 
-                        cin >> userSubInput;
+                            cout << endl << "| Offer |" << endl;
+                            if (not formAlliance) {cout  << " 1: Form alliance " << endl;}
+                            if (not ceasefire) {cout << " 2: Cease of hostility" << endl;}
+                            cout << " 3: Send energy" << endl;
+                            cout << " 4: Send metal" << endl;
+                            cout << " 5: Sent oil" << endl;
+                            cout << " 6: Reset" << endl;
+                            cout << " 7: Back" << endl;
+                            cout << "-> ";
 
-                        switch (userSubInput) {
-                            case ('1'): {
-                                formAlliance = true;
-                                continue;
-                            }
-                            case ('2'): {
-                                ceasefire = true;
-                                continue;
-                            }
-                            case ('3'): {
-                                cin >> energy;
-                                continue;
-                            }
-                            case ('4'): {
-                                cin >> metal;
-                                continue;
-                            }
-                            case ('5'): {
-                                cin >> oil;
-                                continue;
-                            }
-                            case ('6'): {
-                                formAlliance = false;
-                                ceasefire = false;
-                                aPassRight = 0;
+                            cin.ignore();
+                            cin >> userSubInput;
 
-                                metal = 0;
-                                oil = 0;
-                                energy = 0;
-                                continue;
-                            }
-                            case ('7'): {
-                                break;
-                            }
+                            switch (userSubInput) {
+                                case ('1'): {
+                                    formAlliance = true;
+                                    cout << "Alliance added to the request" << endl;
+                                    continue;
+                                }
+                                case ('2'): {
+                                    ceasefire = true;
+                                    cout << "Ceasefire added to the request" << endl;
+                                    continue;
+                                }
+                                case ('3'): {
+                                    cout << "Amount of energy: ";
+                                    cin >> energy;
+                                    continue;
+                                }
+                                case ('4'): {
+                                    cout << "Amount of metal: ";
+                                    cin >> metal;
+                                    continue;
+                                }
+                                case ('5'): {
+                                    cout << "Amount of oil: ";
+                                    cin >> oil;
+                                    continue;
+                                }
+                                case ('6'): {
+                                    formAlliance = false;
+                                    ceasefire = false;
+                                    aPassRight = 0;
 
-
+                                    if (metal > 0) {
+                                        metal = 0;
+                                    }
+                                    if (oil > 0) {
+                                        oil = 0;
+                                    }
+                                    if (energy > 0) {
+                                        energy = 0;
+                                    }
+                                    continue;
+                                }
+                                case ('7'): {
+                                    goto diplomacy_main_menu; // break statement does not break out of the loop :(
+                                }
+                                default: {
+                                    cout << endl << "Wrong Input" << endl;
+                                    continue;
+                                }
+                            }
                         }
                     }
+
                     case ('2'): {
+
                         char userSubInput;
 
-                        if (aPassRight == 0) {cout << endl << "1: Request military access" << endl;}
-                        cout << "2: Demand energy" << endl;
-                        cout << "3: Demand metal" << endl;
-                        cout << "4: Demand oil" << endl;
-                        cout << "5: Reset" << endl;
-                        cout << "6: Back" << endl;
+                        while (true) {
 
-                        cin >> userSubInput;
+                            cout << endl << "| Demand |" << endl;
+                            if (aPassRight == 0) { cout << " 1: Request military access" << endl; }
+                            cout << " 2: Demand energy" << endl;
+                            cout << " 3: Demand metal" << endl;
+                            cout << " 4: Demand oil" << endl;
+                            cout << " 5: Reset" << endl;
+                            cout << " 6: Back" << endl;
+                            cout << "-> ";
 
-                        switch (userSubInput) {
-                            case ('1'): {
-                                cout << "Amount of turns: " ;
-                                cin >> aPassRight;
-                                if (aPassRight < 0) {
-                                    aPassRight =0;
+                            cin.ignore();
+                            cin >> userSubInput;
+
+                            switch (userSubInput) {
+                                case ('1'): {
+                                    cout << "Amount of turns: ";
+                                    cin >> aPassRight;
+                                    if (aPassRight < 0) {
+                                        aPassRight = 0;
+                                    }
+                                    continue;
                                 }
-                                continue;
-                            }
-                            case ('2'): {
-                                cin >> energy;
-                                energy = -energy;
-                                continue;
-                            }
-                            case ('3'): {
-                                cin >> metal;
-                                metal = -metal;
-                                continue;
-                            }
-                            case ('4'): {
-                                cin >> oil;
-                                oil = -oil;
-                                continue;
-                            }
-                            case ('5'): {
+                                case ('2'): {
+                                    cout << "Amount of energy: ";
+                                    cin >> energy;
+                                    energy = -energy;
+                                    continue;
+                                }
+                                case ('3'): {
+                                    cout << "Amount of metal: ";
+                                    cin >> metal;
+                                    metal = -metal;
+                                    continue;
+                                }
+                                case ('4'): {
+                                    cout << "Amount of oil: ";
+                                    cin >> oil;
+                                    oil = -oil;
+                                    continue;
+                                }
+                                case ('5'): { // RESET DEMANDED
 
-                                aPassRight = 0;
+                                    aPassRight = 0;
 
-                                metal = 0;
-                                oil = 0;
-                                energy = 0;
-                                continue;
-                            }
-                            case ('6'): {
-                                break;
-                            }
+                                    if (metal < 0) {
+                                        metal = 0;
+                                    }
+                                    if (oil < 0) {
+                                        metal = 0;
+                                    }
+                                    if (energy < 0) {
+                                        energy = 0;
+                                    }
+                                    continue;
+                                }
+                                case ('6'): {
+                                    goto diplomacy_main_menu;
+                                }
 
+                                default: {
+                                    cout << endl << "Wrong Input" << endl;
+                                    continue;
+                                }
+
+
+                            }
 
                         }
-
-
                     }
 
                     case ('3'): {
-                        cout << "Your message to: " << recipient->countryName << endl;
+
+                        cout << endl << "| Message |" << endl;
+                        cout << "Your message to " << recipient->countryName << ": " << endl;
                         cin.ignore();
                         std::getline(std::cin,userMessage);
+                        break;
                     }
 
-                    case ('4'): {
-                        char userSubInput;
-                        cout << endl << "Summary: " << endl;
-                        if (formAlliance) {cout << endl << "> Form alliance " << endl;}
+                    case ('4'): { // SUMMARY
+
+                        cout << endl << "| Summary | " << endl;
+
+
+                        cout << endl << "> Offered" << endl;
+                        if (formAlliance) {cout << " Form alliance " << endl;}
                         if (ceasefire) {cout << "> Cease of hostility" << endl;}
+                        if (metal > 0) { cout << " Metal: " << metal << endl;}
+                        if (energy > 0) { cout << " Energy: " << energy << endl;}
+                        if (oil > 0) { cout << " Oil: " << oil << endl;}
 
-                        cout << endl << "Offer: " << endl << endl;
-                        if (metal > 0) { cout << "Metal: " << metal << endl;}
-                        if (energy > 0) { cout << "Energy: " << energy << endl;}
-                        if (oil > 0) { cout << "Oil: " << oil << endl;}
+                        cout << endl << "> Demanded" << endl;
+                        if (aPassRight > 0 ) { cout << " Military access for " << aPassRight << " turn(s)" << endl;}
+                        if (metal < 0) { cout << " Metal: " << metal << endl;}
+                        if (energy < 0) { cout << " Energy: " << energy << endl;}
+                        if (oil < 0) { cout << " Oil: " << oil << endl;}
 
+                        cout << endl << "> Message" << endl;
+                        cout << endl << userMessage << endl;
+                        cout << "----------------" << endl;
+                        break;
+                    }
+
+                    case ('5'): {
+                        char userSubInput;
+
+                        cout << endl << "Do you want to send this request?" << endl;
                         cout << endl << "1: Confirm" << endl;
-                        cout << endl << "2: Back" << endl;
+                        cout << "2: Back" << endl;
+                        cout << "-> ";
+
+                        cin.ignore();
                         cin >> userSubInput;
 
                         switch (userSubInput) {
+
                             case ('1'): {
+
                                 cout << "Enter period of validity: ";
                                 cin >> periodOfValidity;
+
                                 if (periodOfValidity < 1) {
                                     cout << "Period of validity set to 1" << endl;
                                     periodOfValidity = 1;}
@@ -406,81 +478,104 @@ public:
                                 ceasefire,aPassRight, metal, oil, energy, periodOfValidity);
 
                                 issuer -> sentDiplomacyRequests.push_back(dr);
-                                recipient -> incomingDiplomacyRequests.push_back(dr);
+                                recipient -> receivedDiplomacyRequests.push_back(dr);
+
+                                cout << "Request sent successfully" << endl;
+                                break;
                             }
 
                             case ('2'): {
                                 continue; }
+
+                            default: {
+                                cout << endl << "Wrong Input" << endl;
+                                continue;
+                            }
                         }
                     }
-                    case ('5'): {
+                    case ('6'): {
                         return;}
+
+                    default: {
+                        cout << endl << "Wrong Input" << endl;
+                        continue;
+                    }
                 }
             }
 
         }
-
-
-    }
     void                    D_ControlInterf  (Country *countryInControl) {
         /** The function will provide a country object with information on received, sent, accepted diplomacy request
          * and let compose a new request.
          */
 
         do {
-            cout << endl << "1: Treaty Report" << endl;
-            cout << "2: Sent Requests" << endl;
-            cout << "3: Received Requests [" << countryInControl->incomingDiplomacyRequests.size() << "]" << endl;
-            cout << "4: Compose new request" << endl;
-            cout << "5: Main Menu" << endl << "->";
+            cout << endl << "| DIPLOMACY |" << endl;
+            cout << " 1: Treaty Report" << endl;
+            cout << " 2: Sent Requests [" << countryInControl->sentDiplomacyRequests.size() << "]" << endl;
+            cout << " 3: Received Requests [" << countryInControl->receivedDiplomacyRequests.size() << "]" << endl;
+            cout << " 4: Compose new request" << endl;
+            cout << " 5: Main Menu" << endl << "-> ";
 
             char userSelection;
+
+            cin.ignore();
             cin >> userSelection;
 
             switch (userSelection) {
                 case ('1'): {
-                    // MILITARY ACCESS TREATIES
-                    for (MilitaryAccess *ma : countryInControl->accessRights) {
-                        ma->coutMyself();
-                    }
-                    cout << endl;
-                    // WAR TREATIES
-                    for (Country *c : countryInControl->enemies) {
-                        cout << "At war with: " << c->countryName;
-                    }
-                    // ALLIED COUNTRIES
-                    for (Country *c : countryInControl->allies) {
-                        cout << "Alliance treaty with: " << c->countryName;
-                    }
 
+                    bool treatiesExist = !(countryInControl->accessRights.empty()
+                                          && countryInControl->enemies.empty()
+                                          && countryInControl->allies.empty());
+
+                    if ( treatiesExist ) {
+
+                        // MILITARY ACCESS TREATIES
+                        for (MilitaryAccess *ma : countryInControl->accessRights) {
+                            ma->coutMyself();
+                        }
+                        cout << endl;
+                        // WAR TREATIES
+                        for (Country *c : countryInControl->enemies) {
+                            cout << "At war with: " << c->countryName << endl;
+                        }
+                        // ALLIED COUNTRIES
+                        for (Country *c : countryInControl->allies) {
+                            cout << "Alliance treaty with: " << c->countryName << endl;
+                        }
+                    } else {
+                        cout << endl << "Nothing to display" << endl;
+                    }
                     continue;
-
-//                    char userSubSelection;
-//                    cout << endl << "1: Continue" << endl;
-//                    cin >> userSubSelection;
-//                    if (userSubSelection == '1') {
-//                        continue;
-//                    }
                 }
 
                 case ('2'): {
-                    for (DiplomacyRequest *dr : countryInControl->sentDiplomacyRequests) {
-                        cout << endl << "Sent to: " << dr->recipientCountry->countryName;
-                        dr->coutReportOfConditions();
-                        if (countryInControl->sentDiplomacyRequests.size() == 0 ) {
-                            cout << "Nothing to display" << endl;
+                    if (countryInControl->sentDiplomacyRequests.empty() ) {
+                        cout << endl << "Nothing to display" << endl;
+
+                    } else {
+
+                        for (DiplomacyRequest *dr : countryInControl->sentDiplomacyRequests) {
+                            cout << endl << "| Sent to: " << dr->recipientCountry->countryName<< " |" << endl;;
+                            dr->coutReportOfConditions();
+
                         }
-
-
                     }
                     continue;
-
                 }
 
                 case ('3'): {
-                    for (DiplomacyRequest *dr : countryInControl->incomingDiplomacyRequests) {
-                        cout << endl << "Received from " << dr->issuerCountry->countryName;
-                        dr->coutReportOfConditions();
+
+                    if (countryInControl->receivedDiplomacyRequests.empty() ) {
+                        cout << endl << "Nothing to display" << endl;
+
+                    } else {
+
+                        for (DiplomacyRequest *dr : countryInControl->receivedDiplomacyRequests) {
+                            cout << endl << "| Received from " << dr->issuerCountry->countryName << " |" << endl;
+                            dr->coutReportOfConditions();
+                        }
                     }
                     continue;
                 }
@@ -495,6 +590,11 @@ public:
                     return;
                 }
 
+                default: {
+                    cout << endl << "Wrong Input" << endl;
+                    continue;
+                }
+
 
             }
 
@@ -503,7 +603,7 @@ public:
 
 //  ### COUNTRY CONTROL ###
 
-    map <string, Country*> countries_to_map(Country *inCountry) {
+    map <string, Country*>  countries_to_map (Country *inCountry) {
         /** A function to convert the "countries" array into a map structure where the string
          * key denotes its position in the array;
          *
@@ -532,7 +632,7 @@ public:
         }
         return countriesAsMap;
     }
-    Country*                input_Country   (Country *inCountry) {
+    Country*                input_Country    (Country *inCountry) {
         /** The function which will display the content of "countries" vector, structurised as a map where the keys
          * denote the position of an object in the array.
          *
@@ -548,7 +648,7 @@ public:
         string userInput;
         bool isInputValid = false;
 
-        cout << "Select a country" << endl;
+        cout << endl << "Select a country" << endl;
 
 
 
@@ -587,41 +687,27 @@ public:
 
         countryInControl->runResourceCollection();
 
-        cout << "[ " << Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl << endl;
-
-        cout << "0: Diplomacy [" << countryInControl->incomingDiplomacyRequests.size() << "]" << endl;
-        cout << "1: Make a diplomacy request" << endl;
-        cout << "2: Display pending diplomacy requests [" << countryInControl->incomingDiplomacyRequests.size() << "]" << endl;
-        cout << "3: Display regions" << endl;
-        cout << "4: End turn" << endl;
-
         char command;
 
-        while (true == true) {  // MAINLOOP
-            cout << endl << "Your command: ";
+        while (true) {  // MAINLOOP
+            cout << endl << "[ Turn " << Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl ;
+
+            cout << endl << " 1: Diplomacy [" << countryInControl->receivedDiplomacyRequests.size() << "]" << endl;
+            cout << " 2: Regions" << endl;
+            cout << " 3: End turn" << endl;
+            cout <<  "->  ";
+
+            cin.ignore();
             cin >> command;
-            cout << endl;
 
             switch (command) {
 
-                case ('0'):
+                case ('1'):{
                     D_ControlInterf(countryInControl);
+                    break;
+                }
 
-                case ('1'): {
-                    new_DRequest(countryInControl);
-                    break;
-                }
                 case ('2'): {
-                    // to-do implement as a function;
-                    for (int i = 0; i < countryInControl->incomingDiplomacyRequests.size(); ++i) {
-                        cout << endl;
-                        cout << "From: " << countryInControl->incomingDiplomacyRequests.at(i)->issuerCountry->countryName
-                             << endl;
-                        cout << "Message: " << endl << countryInControl->incomingDiplomacyRequests.at(i)->getMessage() << endl;
-                    }
-                    break;
-                }
-                case ('3'): {
                     Region *selectedRegion;
                     string functionOutcome;
 
@@ -632,10 +718,14 @@ public:
                     } while (functionOutcome == "back to region selection");
                     break;
                 }
-                case ('4'): {
+                case ('3'): {
                     return;
                 }
 
+                default: {
+                    cout << endl << "Wrong Input" << endl;
+                    continue;
+                }
 
             }
         }

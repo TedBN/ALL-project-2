@@ -44,24 +44,24 @@ public:
     void        coutReportOfConditions() {
         /** Function to output the summary of the request on the screen. */
 
-        cout<< "Offered: " <<endl;
+        cout<< endl << "> Offered " <<endl;
 
-        if (formAlliance)     {cout << "Form alliance" << endl;}
-        if (ceasefire)        {cout << "Cease of hostility" << endl; }
-        if (metal > 0)        {cout << metal << " Units of metal offered";}
-        if (oil > 0)          {cout << oil << " Units of oil offered";}
-        if (energy > 0)       {cout << energy << " Units of energy offered";}
+        if (formAlliance)     {cout << "  Form alliance" << endl;}
+        if (ceasefire)        {cout << "  Cease of hostility" << endl; }
+        if (metal > 0)        {cout << "  " << metal << " Metal"<< endl;;}
+        if (oil > 0)          {cout << "  " << oil << " Oil"<< endl;;}
+        if (energy > 0)       {cout << "  " << energy << " Energy"<< endl;;}
 
-        cout <<endl<< "Demanded: " <<endl;
+        cout <<endl<< ">Demanded: " <<endl;
 
-        if (aPassRight > 0 ) {cout << " Military access for " << aPassRight << " turns" <<  endl; }
-        if (metal < 0)       {cout << metal << " Units of metal offered";}
-        if (oil < 0)         {cout << oil << " Units of oil offered";}
-        if (energy < 0)      {cout << energy << " Units of energy offered";}
+        if (aPassRight > 0 ) {cout << "  Military access for " << aPassRight << " turns" <<  endl; }
+        if (metal < 0)       {cout << "  " << -metal << " Units of metal offered"<< endl;;}
+        if (oil < 0)         {cout << "  " << -oil << " Units of oil offered"<< endl;;}
+        if (energy < 0)      {cout << "  " << -energy << " Units of energy offered"<< endl;;}
 
-        cout <<endl<< message <<endl;
-
-        cout <<endl<< "The request is valid for: " << periodOfValidity << " turns" <<endl;
+        cout <<endl<< " Message" <<endl;
+        cout << "  " << message <<endl;
+        cout <<endl<< "The request remains valid for: " << periodOfValidity << " turns" <<endl;
         cout << "----------------" <<endl;
     }
 
@@ -94,7 +94,7 @@ public:
     vector <Country*>           allies ;                 // Vector to comprise allies of the country
     vector <Country*>           enemies;                // Enemies of the country
     vector <Country*>           neutral;               // Permission to cross other country's border
-    vector <DiplomacyRequest*>  incomingDiplomacyRequests;
+    vector <DiplomacyRequest*>  receivedDiplomacyRequests;
     vector <DiplomacyRequest*>  sentDiplomacyRequests;
     vector <Region*>            regions;            // Vector to comprise regions under the country's control
     vector <MilitaryAccess*>    accessRights;      // Rights to access the territory of a country in the vector
@@ -181,16 +181,18 @@ public:
 
         selectedRegion->displayStats();
 
-        cout << endl << "Region control options" << endl;
+        cout << endl << "| Region control options |" << endl;
 
-        cout << endl << "1: Transfer resources to another region" << endl;
-        cout << "2: Defence army overview" << endl;
-        cout << "3: Infrastructure upgrade" << endl;
+        cout << endl << " 1: Transfer resources to another region" << endl;
+        cout << " 2: Defence army overview" << endl;
+        cout << " 3: Infrastructure upgrade" << endl;
 
-        cout << "4: Back" << endl;
-        cout << "5: Back to main menu" << endl << "-> ";
+        cout << " 4: Back" << endl;
+        cout << " 5: Back to main menu" << endl << "-> ";
 
         char userCommand;
+
+        cin.ignore();
         cin >> userCommand;
 
         switch (userCommand) {
@@ -219,6 +221,10 @@ public:
 
             case ('5'): {
                 return "back to main menu";
+            }
+
+            default: {
+                cout << endl << "Wrong Input" << endl;
             }
 
 
@@ -311,8 +317,6 @@ public:
             cout << "Insufficient resources" << endl;
         }
     }
-    void                        breakAlliance();
-    void                        declareWar();
 
 // ### CONSTRUCTORS ###
     Country (Region *region1, Region *region2, string name) : countryName(name) {
