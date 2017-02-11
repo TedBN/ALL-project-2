@@ -13,21 +13,21 @@ Region.h
 /Users/Oscari/My Files/Git/ALL-project-2/Manager.h
 Country.h
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
-array
--
-map
--
 
 /Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
 iostream
 -
 
 /Users/Oscari/My Files/Git/ALL-project-2/Region.h
+iostream
+-
 string
 -
 vector
 -
 map
+-
+array
 -
 MilitaryUnit.h
 /Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
@@ -35,14 +35,6 @@ Country.h
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
 
 /Users/Oscari/My Files/Git/ALL-project-2/main.cpp
-iostream
--
-array
--
-vector
--
-string
--
 Manager.h
 /Users/Oscari/My Files/Git/ALL-project-2/Manager.h
 

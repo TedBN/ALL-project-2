@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <array>
 
 #include "MilitaryUnit.h"
 #include "Country.h"
