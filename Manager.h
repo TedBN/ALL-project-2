@@ -15,6 +15,7 @@ public:
 //  ##################
 //  ### ATTRIBUTES ###
 
+    vector <DiplomacyRequest*> allDiplomacyRequests;
     int                     turn = 1;               // Keeps track of the current turn;
     int                     countriesInGame;        // Quantity of currently active countries
     array   <Region, 8>     all_Regions;
@@ -214,6 +215,7 @@ public:
 
         while (Manager::countriesInGame > 1) {
 
+
             // to-do implement a function to destruct a Country object and decrement Manager::countriesInGame
 
             if (countries[i] == NULL) {
@@ -225,6 +227,7 @@ public:
             if (i == countries.size() - 1) {
                 i = 0;
                 Manager::turn++;
+                run_Diplomacy_Maintenance();
                 continue; }
 
             i++;
@@ -233,6 +236,33 @@ public:
     };        //   MAINLOOP
 
 //  ###    DIPLOMACY   ###
+
+    void                    run_Diplomacy_Maintenance () {
+        /** This function runs DiplomacyRequest::runMaintenance() which will return the address
+         *  of an object if its period of validity expired at call time
+         *  , else it will return NULL;
+         *
+         *  If the result isn't NULL it will be erased from the heap and the pointer removed from the
+         *  vector of all the ongoing diplomacy requests "allDiplomacyRequests"
+         *
+         */
+        DiplomacyRequest* expiredRequest;
+
+        for (DiplomacyRequest * dr : allDiplomacyRequests ) {
+
+            if (dr->runMaintenance() != NULL) {
+                // OBJECT EXPIRED
+                expiredRequest = dr->runMaintenance();
+                // OBJECT REMOVED FROM THE VECTOR OF ONGOING REQUESTS and sent/received vecotrs of bouth countries
+                allDiplomacyRequests.erase(remove(allDiplomacyRequests.begin(), allDiplomacyRequests.end(),expiredRequest ), allDiplomacyRequests.end());
+                expiredRequest->issuerCountry->removeSentRequest(expiredRequest);
+                expiredRequest->recipientCountry->removeReceivedRequest(expiredRequest);
+                // OBJECT DELETED
+                delete expiredRequest;
+                expiredRequest = NULL;
+            }
+        }
+    }
 
     void                    new_DRequest     (Country *issuer) {
 // to-do exceptions management for input validation cin >> energy
@@ -268,7 +298,6 @@ public:
             cout << " 6: Discard" << endl;
             cout << "-> ";
 
-            cin.ignore();
             cin >> userInput;
 
 
@@ -288,7 +317,6 @@ public:
                             cout << " 7: Back" << endl;
                             cout << "-> ";
 
-                            cin.ignore();
                             cin >> userSubInput;
 
                             switch (userSubInput) {
@@ -359,7 +387,6 @@ public:
                             cout << " 6: Back" << endl;
                             cout << "-> ";
 
-                            cin.ignore();
                             cin >> userSubInput;
 
                             switch (userSubInput) {
@@ -423,6 +450,7 @@ public:
 
                         cout << endl << "| Message |" << endl;
                         cout << "Your message to " << recipient->countryName << ": " << endl;
+
                         cin.ignore();
                         std::getline(std::cin,userMessage);
                         break;
@@ -460,7 +488,6 @@ public:
                         cout << "2: Back" << endl;
                         cout << "-> ";
 
-                        cin.ignore();
                         cin >> userSubInput;
 
                         switch (userSubInput) {
@@ -479,6 +506,7 @@ public:
 
                                 issuer -> sentDiplomacyRequests.push_back(dr);
                                 recipient -> receivedDiplomacyRequests.push_back(dr);
+                                allDiplomacyRequests.push_back(dr);
 
                                 cout << "Request sent successfully" << endl;
                                 break;
@@ -519,7 +547,6 @@ public:
 
             char userSelection;
 
-            cin.ignore();
             cin >> userSelection;
 
             switch (userSelection) {
@@ -697,7 +724,6 @@ public:
             cout << " 3: End turn" << endl;
             cout <<  "->  ";
 
-            cin.ignore();
             cin >> command;
 
             switch (command) {

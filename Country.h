@@ -41,6 +41,18 @@ public:
     void        acceptRequest();
 
 public:
+    DiplomacyRequest*        runMaintenance() {
+        /** This function processes validity period of a request and if
+         * the it has expired will return the objetc's address for further processing
+         * (i.e. erasure and removal from the list of all the ongoing requests)
+         */
+        periodOfValidity--;
+        if (periodOfValidity <= 0) {
+            return this;
+        } else {
+            return NULL;
+        }
+    }
     void        coutReportOfConditions() {
         /** Function to output the summary of the request on the screen. */
 
@@ -61,7 +73,13 @@ public:
 
         cout <<endl<< " Message" <<endl;
         cout << "  " << message <<endl;
-        cout <<endl<< "The request remains valid for: " << periodOfValidity << " turns" <<endl;
+
+        if (periodOfValidity - 1 == 0 ) {
+            cout <<endl<< "The request remains valid for: this turn only" <<endl;
+        } else {
+            cout <<endl<< "The request remains valid for: " << periodOfValidity - 1 << " turns" <<endl;
+        }
+
         cout << "----------------" <<endl;
     }
 
@@ -70,11 +88,11 @@ public:
 
     DiplomacyRequest(Country *issuerCountry, Country *recipientCountry,
                      const string &message, bool formAlliance,  bool ceasfire,
-                     int aPassRight, int metal, int oil, int energy,  int periodOfValidity)
-            : issuerCountry(issuerCountry), recipientCountry(recipientCountry), message(message),
+                     int aPassRight, int metal, int oil, int energy,  int periodOfValidity) :
+              issuerCountry(issuerCountry), recipientCountry(recipientCountry), message(message),
               formAlliance(formAlliance),  ceasefire(ceasfire),
               aPassRight(aPassRight),  metal(metal), oil(oil), energy(energy),
-              periodOfValidity(periodOfValidity) {
+              periodOfValidity(periodOfValidity + 1) {
     }
 
     virtual ~DiplomacyRequest() {}
@@ -192,7 +210,6 @@ public:
 
         char userCommand;
 
-        cin.ignore();
         cin >> userCommand;
 
         switch (userCommand) {
@@ -316,6 +333,12 @@ public:
         } else {
             cout << "Insufficient resources" << endl;
         }
+    }
+    void                        removeSentRequest(DiplomacyRequest * expiredRequest) {
+        sentDiplomacyRequests.erase(remove(sentDiplomacyRequests.begin(), sentDiplomacyRequests.end(), expiredRequest ), sentDiplomacyRequests.end());
+    }
+    void                        removeReceivedRequest(DiplomacyRequest * expiredRequest) {
+        receivedDiplomacyRequests.erase(remove(receivedDiplomacyRequests.begin(), receivedDiplomacyRequests.end(), expiredRequest ), receivedDiplomacyRequests.end());
     }
 
 // ### CONSTRUCTORS ###
