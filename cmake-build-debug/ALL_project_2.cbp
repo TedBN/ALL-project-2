@@ -92,18 +92,6 @@
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Region.h">
 			<Option target="ALL_project_2"/>
 		</Unit>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T1.h">
-			<Option target="ALL_project_2"/>
-		</Unit>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T2.h">
-			<Option target="ALL_project_2"/>
-		</Unit>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T3.h">
-			<Option target="ALL_project_2"/>
-		</Unit>
-		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Test/T4.h">
-			<Option target="ALL_project_2"/>
-		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/main.cpp">
 			<Option target="ALL_project_2"/>
 		</Unit>

@@ -7,40 +7,34 @@
 #IncludeRegexTransform: 
 
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
-vector
--
 Region.h
 /Users/Oscari/My Files/Git/ALL-project-2/Region.h
 
 /Users/Oscari/My Files/Git/ALL-project-2/Manager.h
 Country.h
 /Users/Oscari/My Files/Git/ALL-project-2/Country.h
-array
--
 
 /Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
 iostream
 -
 
 /Users/Oscari/My Files/Git/ALL-project-2/Region.h
-fstream
-/Users/Oscari/My Files/Git/ALL-project-2/fstream
-string
-/Users/Oscari/My Files/Git/ALL-project-2/string
-vector
-/Users/Oscari/My Files/Git/ALL-project-2/vector
-MilitaryUnit.h
-/Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
-
-/Users/Oscari/My Files/Git/ALL-project-2/main.cpp
 iostream
+-
+string
+-
+vector
+-
+map
 -
 array
 -
-vector
-/Users/Oscari/My Files/Git/ALL-project-2/vector
+MilitaryUnit.h
+/Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
+Country.h
+/Users/Oscari/My Files/Git/ALL-project-2/Country.h
+
+/Users/Oscari/My Files/Git/ALL-project-2/main.cpp
 Manager.h
 /Users/Oscari/My Files/Git/ALL-project-2/Manager.h
-string
--
 
