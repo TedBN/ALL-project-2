@@ -451,3 +451,41 @@ Linking CXX executable cmTC_28da4
     Feature record: CXX_FEATURE:0cxx_variable_templates
     Feature record: CXX_FEATURE:0cxx_variadic_macros
     Feature record: CXX_FEATURE:0cxx_variadic_templates
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0a1d3/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_0a1d3.dir/build.make CMakeFiles/cmTC_0a1d3.dir/build
+Building C object CMakeFiles/cmTC_0a1d3.dir/CheckIncludeFile.c.o
+/Library/Developer/CommandLineTools/usr/bin/cc     -o CMakeFiles/cmTC_0a1d3.dir/CheckIncludeFile.c.o   -c "/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/CMakeTmp/CheckIncludeFile.c"
+Linking C executable cmTC_0a1d3
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0a1d3.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_0a1d3.dir/CheckIncludeFile.c.o  -o cmTC_0a1d3  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_64a5e/fast"
+/Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_64a5e.dir/build.make CMakeFiles/cmTC_64a5e.dir/build
+Building C object CMakeFiles/cmTC_64a5e.dir/CheckSymbolExists.c.o
+/Library/Developer/CommandLineTools/usr/bin/cc     -o CMakeFiles/cmTC_64a5e.dir/CheckSymbolExists.c.o   -c "/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/CMakeTmp/CheckSymbolExists.c"
+Linking C executable cmTC_64a5e
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_64a5e.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_64a5e.dir/CheckSymbolExists.c.o  -o cmTC_64a5e  
+
+File /Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

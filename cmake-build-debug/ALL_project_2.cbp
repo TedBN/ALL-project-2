@@ -5,7 +5,7 @@
 		<Option title="ALL_project_2"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\lib\;CMake Files\lib\googletest-master\;CMake Files\lib\googletest-master\googlemock\;CMake Files\lib\googletest-master\googletest\;CMake Files\lib\googletest-master\googletest\cmake\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
@@ -37,34 +37,35 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="ALL_project_2">
-				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/ALL_project_2" prefix_auto="0" extension_auto="0"/>
+			<Target title="list_install_components">
 				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
-					<Add directory="/usr/include"/>
-					<Add directory="/System/Library/Frameworks"/>
-					<Add directory="/Library/Frameworks"/>
-					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
-				</Compiler>
+				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 ALL_project_2"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 list_install_components"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="ALL_project_2/fast">
-				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/ALL_project_2" prefix_auto="0" extension_auto="0"/>
+			<Target title="install/local">
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testing">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/testing" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
 					<Add directory="/usr/include"/>
@@ -73,30 +74,372 @@
 					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 ALL_project_2/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 testing"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="testing/fast">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/testing" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 testing/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="main">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/main" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 main"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="main/fast">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/main" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 main/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_main">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/libgmock_main.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 gmock_main"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock_main/fast">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/libgmock_main.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 gmock_main/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/libgmock.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 gmock"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gmock/fast">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/libgmock.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 gmock/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/libgtest_main.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest_main"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/libgtest_main.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/libgtest.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/libgtest.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/Oscari/My Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/include"/>
+					<Add directory="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 gtest/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/Oscari/My\ Files/Git/ALL-project-2/cmake-build-debug/lib/googletest-master/googlemock/gtest/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Country.h">
-			<Option target="ALL_project_2"/>
+			<Option target="testing"/>
+			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Manager.h">
-			<Option target="ALL_project_2"/>
+			<Option target="testing"/>
+			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h">
-			<Option target="ALL_project_2"/>
+			<Option target="testing"/>
+			<Option target="main"/>
 		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/Region.h">
-			<Option target="ALL_project_2"/>
+			<Option target="testing"/>
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/src/gmock-all.cc">
+			<Option target="gmock_main"/>
+			<Option target="gmock"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/src/gmock_main.cc">
+			<Option target="gmock_main"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/src/gtest-all.cc">
+			<Option target="gmock_main"/>
+			<Option target="gmock"/>
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
 		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/main.cpp">
-			<Option target="ALL_project_2"/>
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/testing/Testing.cpp">
+			<Option target="testing"/>
 		</Unit>
 		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googlemock\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googlemock\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googlemock\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="/Users/Oscari/My Files/Git/ALL-project-2/lib/googletest-master/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\lib\googletest-master\googletest\cmake\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
