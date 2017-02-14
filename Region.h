@@ -124,7 +124,7 @@ public:
         cout << "Metal stock: " << metalStock << endl;
         cout << "Oil stock: " << oilStock << endl << endl;
 
-        cout << "Stockpile: " << stockLimit << endl << endl;
+        cout << "Stock Limit: " << stockLimit << endl << endl;
 
         cout << "Army units: " << defenceArmies.size() << endl ;
     }

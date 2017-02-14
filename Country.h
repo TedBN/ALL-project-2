@@ -38,7 +38,7 @@ public:
     string      message;
 
 // ### METHODS
-    void        acceptRequest();
+
 
 public:
     DiplomacyRequest*        runMaintenance() {
@@ -115,7 +115,7 @@ public:
     vector <DiplomacyRequest*>  receivedDiplomacyRequests;
     vector <DiplomacyRequest*>  sentDiplomacyRequests;
     vector <Region*>            regions;            // Vector to comprise regions under the country's control
-    vector <MilitaryAccess*>    accessRights;      // Rights to access the territory of a country in the vector
+    vector <MilitaryAccess*>    territoryAccessRights;      // Rights to access the territory of a country in the vector
 
 //  ### METHODS ###
 
@@ -340,7 +340,8 @@ public:
     void                        removeReceivedRequest(DiplomacyRequest * expiredRequest) {
         receivedDiplomacyRequests.erase(remove(receivedDiplomacyRequests.begin(), receivedDiplomacyRequests.end(), expiredRequest ), receivedDiplomacyRequests.end());
     }
-
+    void                        processNewAlliance(Country * newAlly) {
+    }
 // ### CONSTRUCTORS ###
     Country (Region *region1, Region *region2, string name) : countryName(name) {
         regions.push_back(region1);
@@ -368,6 +369,14 @@ public:
         if (periodOfValidity == 0) {
             receiver -> sendArmiesHomeFrom(provider);
         }
+    }
+
+    Country *getReceiver() const {
+        return receiver;
+    }
+
+    Country *getProvider() const {
+        return provider;
     }
 
 // ### CONSTRUCTORS ###

@@ -16,6 +16,7 @@ public:
 //  ### ATTRIBUTES ###
 
     vector <DiplomacyRequest*> allDiplomacyRequests;
+    vector <MilitaryAccess*>   allM_AccessTreaties;
     int                     turn = 1;               // Keeps track of the current turn;
     int                     countriesInGame;        // Quantity of currently active countries
     array   <Region, 8>     all_Regions;
@@ -111,7 +112,6 @@ public:
             cout << " >" << endl;
             cout << "-> ";
             cin >> userInput;
-
 
             // Checking weather or not the user input is in the list of valid input
             isInputValid = find(begin(validInputs), end(validInputs), userInput) != end(validInputs);
@@ -261,6 +261,18 @@ public:
                 delete expiredRequest;
                 expiredRequest = NULL;
             }
+        }
+    }
+    void                    process_M_Access (Country * provider, Country * receiver, int periodOfValidity){
+
+                            MilitaryAccess * ma = new MilitaryAccess(receiver, provider, periodOfValidity);
+                            allM_AccessTreaties.push_back(ma);
+                            ma->getReceiver()->territoryAccessRights.push_back(ma);
+                            ma->getProvider()->territoryAccessRights.push_back(ma);
+
+    }
+    void                    confirm_D_Request ( DiplomacyRequest * dr) {
+        if ( dr->formAlliance == true ) {
         }
     }
 
@@ -552,14 +564,14 @@ public:
             switch (userSelection) {
                 case ('1'): {
 
-                    bool treatiesExist = !(countryInControl->accessRights.empty()
+                    bool treatiesExist = !(countryInControl->territoryAccessRights.empty()
                                           && countryInControl->enemies.empty()
                                           && countryInControl->allies.empty());
 
                     if ( treatiesExist ) {
 
                         // MILITARY ACCESS TREATIES
-                        for (MilitaryAccess *ma : countryInControl->accessRights) {
+                        for (MilitaryAccess *ma : countryInControl->territoryAccessRights) {
                             ma->coutMyself();
                         }
                         cout << endl;
@@ -594,17 +606,30 @@ public:
 
                 case ('3'): {
 
-                    if (countryInControl->receivedDiplomacyRequests.empty() ) {
+                    if (countryInControl->receivedDiplomacyRequests.empty()) {
                         cout << endl << "Nothing to display" << endl;
 
                     } else {
-
+                        char confirmationInput;
                         for (DiplomacyRequest *dr : countryInControl->receivedDiplomacyRequests) {
                             cout << endl << "| Received from " << dr->issuerCountry->countryName << " |" << endl;
                             dr->coutReportOfConditions();
+
+                            while (true) {
+                                cout << endl << " 1. Confirm" << endl;
+                                cout << " 2. > Next >";
+                                cout << "-> ";
+
+                                cin >> confirmationInput;
+                                if (confirmationInput == '1') {
+                                    confirm_D_Request(dr);
+                                } else {
+                                    continue;
+                                }
+                            }
                         }
+                        continue;
                     }
-                    continue;
                 }
 
                 case ('4'): {
@@ -765,8 +790,8 @@ public:
     Manager()
     {
         initRegions();
-        init_Countries();
-        fill_Neutral(); // Procedure to set all the initialised countries neutral to each other.
+//        init_Countries();
+//        fill_Neutral(); // Procedure to set all the initialised countries neutral to each other.
         mainLoop();
     }
 
