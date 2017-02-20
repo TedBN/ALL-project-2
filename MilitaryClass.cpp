@@ -8,6 +8,7 @@
 
 void MilitaryUnit::set_stats(int a, int h, int s) 
 {
+	/*Sets main combat stats that will affect the army*/
 	attack = a;
 	health = h;
 	speed = s;
@@ -15,11 +16,15 @@ void MilitaryUnit::set_stats(int a, int h, int s)
 
 void MilitaryUnit::set_range(int r) 
 {
+	/*Sets range of attack. 0 means that unit will take
+	damage during an attack.*/
 	range = r;
 }
 
 void MilitaryUnit::set_resourceCost(int ec, int mc, int oc, int tc) 
 {
+	/*Sets the resources that the unit will consume
+	when you start building it.*/
 	energyCost = ec;
 	metalCost = mc;
 	oilCost = oc;
@@ -28,8 +33,13 @@ void MilitaryUnit::set_resourceCost(int ec, int mc, int oc, int tc)
 
 void MilitaryUnit::set_buildCost(int bc)
 {
+	/*Sets the number of turns that will be needed to
+	produce the unit after the resources for it are spent.*/
 	buildCost = bc;
 }
+
+/*Constructors for all unit types.
+Stats have the same purpose as those above.*/
 
 LandUnit::LandUnit()
 {
