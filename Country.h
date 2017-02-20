@@ -33,6 +33,8 @@ public:
     int         energy = 0;
     int         periodOfValidity;
 
+    Region*     resourceRecipientRegion = NULL;
+    Region*     resourceDonorRegion = NULL;
     Country*    issuerCountry;
     Country*    recipientCountry;
     string      message;
@@ -67,9 +69,9 @@ public:
         cout <<endl<< ">Demanded: " <<endl;
 
         if (aPassRight > 0 ) {cout << "  Military access for " << aPassRight << " turns" <<  endl; }
-        if (metal < 0)       {cout << "  " << -metal << " Units of metal offered"<< endl;;}
-        if (oil < 0)         {cout << "  " << -oil << " Units of oil offered"<< endl;;}
-        if (energy < 0)      {cout << "  " << -energy << " Units of energy offered"<< endl;;}
+        if (metal < 0)       {cout << "  " << -metal << " Metal"<< endl;;}
+        if (oil < 0)         {cout << "  " << -oil << " Oil"<< endl;;}
+        if (energy < 0)      {cout << "  " << -energy << " Energy"<< endl;;}
 
         cout <<endl<< " Message" <<endl;
         cout << "  " << message <<endl;
@@ -86,16 +88,17 @@ public:
 
 //  ### CONSTRUCTOR ###
 
-    DiplomacyRequest(Country *issuerCountry, Country *recipientCountry,
-                     const string &message, bool formAlliance,  bool ceasfire,
+    DiplomacyRequest(Country *issuerCountry, Country *recipientCountry, Region *resourceRecipientRegion, Region *resourceDonorRegion,
+                     const string &message, bool formAlliance,  bool ceasefire,
                      int aPassRight, int metal, int oil, int energy,  int periodOfValidity) :
               issuerCountry(issuerCountry), recipientCountry(recipientCountry), message(message),
-              formAlliance(formAlliance),  ceasefire(ceasfire),
+              formAlliance(formAlliance),  ceasefire(ceasefire),
               aPassRight(aPassRight),  metal(metal), oil(oil), energy(energy),
-              periodOfValidity(periodOfValidity + 1) {
-    }
+              periodOfValidity(periodOfValidity + 1), resourceRecipientRegion(
+            resourceRecipientRegion), resourceDonorRegion(resourceDonorRegion) {}
 
-    virtual ~DiplomacyRequest() {}
+    virtual ~DiplomacyRequest() {
+    }
 };
 //  #####################
 
@@ -109,6 +112,7 @@ public:
 
     string                      countryName;
     vector <Army *>             armiesAbroad;
+    vector <Country*>           myArmies;
     vector <Country*>           allies ;                 // Vector to comprise allies of the country
     vector <Country*>           enemies;                // Enemies of the country
     vector <Country*>           neutral;               // Permission to cross other country's border
@@ -116,11 +120,12 @@ public:
     vector <DiplomacyRequest*>  sentDiplomacyRequests;
     vector <Region*>            regions;            // Vector to comprise regions under the country's control
     vector <MilitaryAccess*>    territoryAccessRights;      // Rights to access the territory of a country in the vector
+    vector <string>             notifications;  // a vector of notifactions of events that happened with the country
 
 //  ### METHODS ###
 
     vector<Army *>              getAllArmies ();
-    map< string, Region* >      structuriseRegionsAsMap (Region * inRegion) {
+    map< string, Region* >      structuriseRegionsAsMap ( Region * inRegion) {
         /** A function to convert a country's "regions" array, which contains "Region" objects,
          *  into a map structure where the string key denotes its position in the array;
          *
@@ -149,47 +154,7 @@ public:
         }
         return regionsAsMap;
         }
-    Region*                     inputRegion(Region * inRegion) {
-        /** The function which will display the content of "regions" vector, structurised as a map where the keys
-         * denote the position of an object in the array.
-         *
-         * The objects matching the address "inRegion" won't be displayed.
-         *
-         * Displayable regions are obtained by calling the function "structuriseRegionsAsMap";
-         * The returned values are displayed.
-         * An user inputs a digit which represents his choice of the region.
-         * Input digit is validated.
-         * If is valid the corresponding region will be returned.
-         */
-        map <string, Region *> regionsAsMap = structuriseRegionsAsMap (inRegion); // Calling function to obtain displayable regions
-        string userInput;
-        bool isInputValid = false;
-
-        cout << "Select a region" << endl;
-
-        for (auto& kv : regionsAsMap) { // DISPLAYING THE CONTENT OF THE STD::MAP
-            cout << kv.first << ": " << kv.second->name << endl;
-        }
-
-        cout << regionsAsMap.size() + 1 << ": " << "< Back <" << endl; // DISPLAYING THE OPTION TO RETURN TO THE PREVIOUS MENU.
-
-        while (isInputValid == false) {  // INPUT VALIDATION
-
-            cout << "-> ";
-            cin >> userInput;
-
-            isInputValid = regionsAsMap.find(userInput) != regionsAsMap.end(); // Whether or not the input is in the map
-
-            if (stoi(userInput) == regionsAsMap.size() + 1 ) { return NULL;} // The user pressed "back" option
-
-            else if (isInputValid == false) {cout << "Invalid input, try again" << endl; }
-
-            else { return regionsAsMap[userInput];} // The pointer is found
-        }
-
-
-
-    }
+    static Region*              inputRegion(Country * country, Region * inRegion);
     string                      regionControlInterface(Region * selectedRegion) {
         /** Calling this function the selected region's stats and a selection of control commands related to the regions
          * are displayed. A user gets to enter a digit that will represents his choice.
@@ -217,7 +182,7 @@ public:
                 Region * destinationRegion;
 
                 cout << endl << "Destination" << endl;
-                destinationRegion = inputRegion(selectedRegion); //to-do implement a function not to output a particular element;
+                destinationRegion = inputRegion(this, selectedRegion); //to-do implement a function not to output a particular element;
                 resourceTransfer(selectedRegion,destinationRegion);
                 return "back to region selection";  }
 
@@ -244,16 +209,11 @@ public:
                 cout << endl << "Wrong Input" << endl;
             }
 
-
-
         }
-
-
-
 
     }
     vector<Army *>              getArmiesOnTerritoryOf( Country * countrySelected ) {
-        /** A function to iterate through the list of "armiesAbroad" of an object and determines if the "Army" object's pointer
+        /** A function to iterate through the list of "armiesAbroad" of an object and determines if an "Army" object's pointer
          * to current location matches any region of the country in the function's argument.
          *
          * The output will be the vector of "Army" pointers whose current location matched the regions.
@@ -340,16 +300,74 @@ public:
     void                        removeReceivedRequest(DiplomacyRequest * expiredRequest) {
         receivedDiplomacyRequests.erase(remove(receivedDiplomacyRequests.begin(), receivedDiplomacyRequests.end(), expiredRequest ), receivedDiplomacyRequests.end());
     }
+    void                        remove_MAccessTreaty(MilitaryAccess * theTreaty) {
+        territoryAccessRights.erase(remove(territoryAccessRights.begin(), territoryAccessRights.end(), theTreaty ), territoryAccessRights.end());
+
+    }
     void                        processNewAlliance(Country * newAlly) {
+    }
+    void                        printNotifications(){
+        cout << endl;
+        for (string notification : notifications) {
+            cout <<  "> " << notification << endl;
+        }
+        notifications.clear();
+        return;
+    }
+    void                        addNotification( string notification) {
+        notifications.push_back(notification);
+        return;
     }
 // ### CONSTRUCTORS ###
     Country (Region *region1, Region *region2, string name) : countryName(name) {
         regions.push_back(region1);
         regions.push_back(region2);
     }
-    Country() {}
+    Country() {cout << countryName << " just got deleted" << endl;}
 } ;
 // #####################
+
+Region*                     Country::inputRegion(Country * country, Region * inRegion) {
+    /** The function which will display the content of "regions" vector, structurised as a map where the keys
+     * denote the position of an object in the array.
+     *
+     * The objects matching the address "inRegion" won't be displayed.
+     *
+     * Displayable regions are obtained by calling the function "structuriseRegionsAsMap";
+     * The returned values are displayed.
+     * An user inputs a digit which represents his choice of the region.
+     * Input digit is validated.
+     * If is valid the corresponding region will be returned.
+     */
+    map <string, Region *> regionsAsMap = country->structuriseRegionsAsMap (inRegion); // Calling function to obtain displayable regions
+    string userInput;
+    bool isInputValid = false;
+
+    cout << "Select a region" << endl;
+
+    for (auto& kv : regionsAsMap) { // DISPLAYING THE CONTENT OF THE STD::MAP
+        cout << kv.first << ": " << kv.second->name << endl;
+    }
+
+    cout << regionsAsMap.size() + 1 << ": " << "< Back <" << endl; // DISPLAYING THE OPTION TO RETURN TO THE PREVIOUS MENU.
+
+    while (isInputValid == false) {  // INPUT VALIDATION
+
+        cout << "-> ";
+        cin >> userInput;
+
+        isInputValid = regionsAsMap.find(userInput) != regionsAsMap.end(); // Whether or not the input is in the map
+
+        if (stoi(userInput) == regionsAsMap.size() + 1 ) { return NULL;} // The user pressed "back" option
+
+        else if (isInputValid == false) {cout << "Invalid input, try again" << endl; }
+
+        else { return regionsAsMap[userInput];} // The pointer is found
+    }
+
+
+
+}
 
 class MilitaryAccess {
 
@@ -364,10 +382,18 @@ public:
     void        coutMyself(){
         cout << endl << "A military access right to " << provider -> countryName << " for: " << periodOfValidity << " turns" << endl;
     }
-    void        runMaintenance() {
+
+    MilitaryAccess * runMaintenance() {
+        /** This function processes validity period of a request and if
+         * the it has expired will return the objetc's address for further processing
+         * (i.e. erasure and removal from the list of all the ongoing requests)
+         */
         periodOfValidity--;
-        if (periodOfValidity == 0) {
+        if (periodOfValidity <= 0) {
             receiver -> sendArmiesHomeFrom(provider);
+            return this;
+        } else {
+            return NULL;
         }
     }
 

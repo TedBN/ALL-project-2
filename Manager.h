@@ -16,10 +16,10 @@ public:
 //  ### ATTRIBUTES ###
 
     vector <DiplomacyRequest*> allDiplomacyRequests;
-    vector <MilitaryAccess*>   allM_AccessTreaties;
+    vector <MilitaryAccess*>   all_MAccess_Treaties;
     int                     turn = 1;               // Keeps track of the current turn;
-    int                     countriesInGame;        // Quantity of currently active countries
-    array   <Region, 8>     all_Regions;
+    int                     countriesInGame =0;        // Quantity of currently active countries
+    array   <Region, 8>     all_Regions; // to-do store on the heap
     array   <Country *, 4>  countries = {NULL, NULL, NULL, NULL};
 
 //  ### INITIALISATION ###
@@ -35,42 +35,42 @@ public:
             switch (i) {
                 case 0: {
                     Army *army = new Army;
-                    Region region0("Region_0", army);
+                    Region region0("Western Germany", army);
                     all_Regions[i] = region0;
                     break;}
                 case 1: {
                     Army *army = new Army;
-                    Region region1("Region_1", army);
+                    Region region1("Eastern Germany", army);
                     all_Regions[i] = region1;
                     break;}
                 case 2: {
                     Army *army = new Army;
-                    Region region2("Region_2", army);
+                    Region region2("Western Spain", army);
                     all_Regions[i] = region2;
                     break;}
                 case 3: {
                     Army *army = new Army;
-                    Region region3("Region_3", army);
+                    Region region3("Eastern Spain", army);
                     all_Regions[i] = region3;
                     break;}
                 case 4: {
                     Army *army = new Army;
-                    Region region4("Region_4", army);
+                    Region region4("Western France", army);
                     all_Regions[i] = region4;
                     break;}
                 case 5: {
                     Army *army = new Army;
-                    Region region5("Region_5", army);
+                    Region region5("Eastern France", army);
                     all_Regions[i] = region5;
                     break;}
                 case 6: {
                     Army *army = new Army;
-                    Region region6("Region_6", army);
+                    Region region6("Western Poland", army);
                     all_Regions[i] = region6;
                     break;}
                 case 7: {
                     Army *army = new Army;
-                    Region region7("Region_7", army);
+                    Region region7("Eastern Poland", army);
                     all_Regions[i] = region7;
                     break;}
             }
@@ -86,12 +86,9 @@ public:
         string userInput;
         int userInputCounter = 0; // Counts how many times a user has entered valid value
         bool isInputValid;
-
-        array <string, 5> validInputs = {"West", "North", "South", "East", "Continue"};
-
+        array <string, 5> validInputs = {"Spain", "France", "Germany", "Poland", "Continue"};
 
         cout << "Select a country: " ;
-
 
         do { // USER INPUT LOOP
 
@@ -116,45 +113,27 @@ public:
             // Checking weather or not the user input is in the list of valid input
             isInputValid = find(begin(validInputs), end(validInputs), userInput) != end(validInputs);
 
-            if (isInputValid == false) {
+            if (!isInputValid) {
                 cout << "Invalid input, try again"<< endl << endl;
                 continue;}
 
-            //  STARTS PROCESSING OF VALID INPUT
-
+            //  REMOVING THE VALIDATED NAME FROM THE VALID INPUT LIST
             for (int i = 0; i < validInputs.size() - 1; i++) {
                 // Replacing the matching value in the input list with ""
                 if (validInputs[i] == userInput) {validInputs[i] = "";}
             }
 
-            if(userInput == "West" ) {
+            if(userInput == "Germany" ) {
+                init_Germany();
 
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&all_Regions[0], &all_Regions[1], "West");
-                // The country is included into the Manager class' countries vector.
-                countries[3] = outCountry;
+            } else if( userInput == "Poland") {
+                init_Poland();
 
-
-            } else if( userInput == "East") {
-
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&all_Regions[2], &all_Regions[3],"East");
-                // The country is included into the Manager class' countries vector.
-                countries[0] = outCountry;
-
-            } else if( userInput == "North") {
-
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&all_Regions[4], &all_Regions[5], "North");
-                // The country is included into the Manager class' countries vector.
-                countries[1] = outCountry;
+            } else if( userInput == "France") {
+                init_France();
 
             } else  if (userInput == "South"){
-
-                // A country is initialised with pre-set regions and name
-                Country *outCountry = new Country(&all_Regions[6], &all_Regions[7], "South");
-                // The country is included into the Manager class' countries vector.
-                countries[2] = outCountry;
+                init_Spain();
 
             } else if (userInput == "Continue") {
                 if (userInputCounter < 2) {
@@ -167,13 +146,62 @@ public:
 
         } while (userInputCounter < 4) ;
 
-        Manager::countriesInGame = userInputCounter; // Save the quantity of initialised countries
-
-
-
-
     }   //   init_Countries()
-    void                    fill_Neutral() {
+    void                    init_Germany()  {
+        /** This function dynamically initialises a new object of the "Country" class and the pointer to it
+         * is stored in the array "countries". The counter of active "Country" objects is also incremented.
+         *
+         * The initialised object has unique properties of associated "regions" and name.
+         * Name: Germany
+         * Regions: Western Germany
+         * Regions: Eastern Germany
+         *
+         */
+        countries[2] = new Country(&all_Regions[0], &all_Regions[1], "Germany");
+        countriesInGame ++;
+    }
+    void                    init_Spain()  {
+        /** This function dynamically initialises a new object of the "Country" class and the pointer to it
+         * is stored in the array "countries". The counter of active "Country" objects is also incremented.
+         *
+         * The initialised object has unique properties of associated "regions" and name.
+         * Name: Spain
+         * Regions: Western Spain
+         * Regions: Eastern Spain
+         *
+         */
+        countries[0] = new Country(&all_Regions[2], &all_Regions[3], "Spain");
+        countriesInGame++;
+        //cout<<"test:"<<countriesInGame;
+    }
+    void                    init_France()  {
+        /** This function dynamically initialises a new object of the "Country" class and the pointer to it
+         * is stored in the array "countries". The counter of active "Country" objects is also incremented.
+         *
+         * The initialised object has unique properties of associated "regions" and name.
+         * Name: France
+         * Regions: Western France
+         * Regions: Eastern France
+         *
+         */
+        countries[1] = new Country(&all_Regions[4], &all_Regions[5], "France");
+        countriesInGame ++;
+    }
+    void                    init_Poland()  {
+        /** This function dynamically initialises a new object of the "Country" class and the pointer to it
+         * is stored in the array "countries". The counter of active "Country" objects is also incremented.
+         *
+         * The initialised object has unique properties of associated "regions" and name.
+         * Name: Poland
+         * Regions: Western Poland
+         * Regions: Eastern Poland
+         *
+         */
+        countries[3] = new Country(&all_Regions[6], &all_Regions[7], "Poland");
+        countriesInGame ++;
+    }
+
+    void                    makeCountriesNeutral() {
         /**A procedure to set all the initialised countries neutral to each other. */
 
         // to-do could it be done with ranged for?
@@ -195,7 +223,7 @@ public:
                 }
             }
         }
-    }     //   fill_Neutral()
+    }     //   makeCountriesNeutral()
     void                    mainLoop() {
         /**
          * Iterate until Manager::activeCountries > 1 {
@@ -218,17 +246,20 @@ public:
 
             // to-do implement a function to destruct a Country object and decrement Manager::countriesInGame
 
-            if (countries[i] == NULL) {
-                i++;
-                continue;}
+            if (i == countries.size()) {
 
-            C_ControlInterf(countries.at(i));
-
-            if (i == countries.size() - 1) {
                 i = 0;
                 Manager::turn++;
                 run_Diplomacy_Maintenance();
-                continue; }
+                run_MAccess_Maintenance();
+                continue;
+            } else if (countries[i] == NULL) {
+                i++;
+                continue;
+            }
+
+            cout << "i is " << i << endl;
+            C_ControlInterf(countries.at(i));
 
             i++;
 
@@ -263,24 +294,186 @@ public:
             }
         }
     }
-    void                    process_M_Access (Country * provider, Country * receiver, int periodOfValidity){
+    void                    run_MAccess_Maintenance () {
+        /** This function runs MilitaryAccess::runMaintenance() which will return the address
+         *  of an object if its period of validity expired at call time
+         *  , else it will return NULL;
+         *
+         *  If the result isn't NULL it will be erased from the heap and the pointer removed from the
+         *  vector of all the ongoing military access treaties in "all_MAccess_Treaties" vector
+         *
+         */
+        MilitaryAccess * expiredRequest;
+
+        for (MilitaryAccess * ma : all_MAccess_Treaties ) {
+
+            if (ma->runMaintenance() != NULL) {
+                // OBJECT EXPIRED
+                expiredRequest = ma->runMaintenance();
+                // OBJECT REMOVED FROM THE VECTOR OF ONGOING REQUESTS and sent/received vecotrs of bouth countries
+                all_MAccess_Treaties.erase(remove(all_MAccess_Treaties.begin(), all_MAccess_Treaties.end(),expiredRequest ), all_MAccess_Treaties.end());
+                expiredRequest->getProvider()->remove_MAccessTreaty(expiredRequest);
+                expiredRequest->getReceiver()->remove_MAccessTreaty(expiredRequest);
+                // OBJECT DELETED
+                delete expiredRequest;
+                expiredRequest = NULL;
+            }
+        }
+    }
+
+    void                    newMAccessTreaty (Country * provider, Country * receiver, int periodOfValidity){
 
                             MilitaryAccess * ma = new MilitaryAccess(receiver, provider, periodOfValidity);
-                            allM_AccessTreaties.push_back(ma);
+                            all_MAccess_Treaties.push_back(ma);
                             ma->getReceiver()->territoryAccessRights.push_back(ma);
                             ma->getProvider()->territoryAccessRights.push_back(ma);
 
     }
-    void                    confirm_D_Request ( DiplomacyRequest * dr) {
-        if ( dr->formAlliance == true ) {
+    void                    newAlliance (Country * c1, Country * c2) {
+        c1->allies.push_back(c2);
+        c2->allies.push_back(c1);
+        c1->neutral.erase(remove(c1->neutral.begin(), c1->neutral.end(), c2 ), c1->neutral.end());
+        c2->neutral.erase(remove(c2->neutral.begin(), c2->neutral.end(), c1 ), c2->neutral.end());
+
+
+
+        // to-do remove from mil acc if true
+
+    }
+    void                    breakAlliance (Country * country1, Country * country2) {
+        country1->allies.erase(remove(country1->allies.begin(), country1->allies.end(),country2 ), country1->allies.end());
+        country2->allies.erase(remove(country2->allies.begin(), country2->allies.end(),country1 ), country2->allies.end());
+    }
+    void                    warDeclaration (Country * c1, Country * c2) {
+        c1->enemies.push_back(c2);
+        c2->enemies.push_back(c1);
+        c1->neutral.erase(remove(c1->neutral.begin(), c1->neutral.end(), c2 ), c1->neutral.end());
+        c2->neutral.erase(remove(c2->neutral.begin(), c2->neutral.end(), c1 ), c2->neutral.end());
+    }
+    void                    ceasefire (Country * country1, Country * country2) {
+        country1->enemies.erase(remove(country1->enemies.begin(), country1->enemies.end(),country2 ), country1->enemies.end());
+        country2->enemies.erase(remove(country2->enemies.begin(), country2->enemies.end(),country1 ), country2->enemies.end());
+        country1->neutral.push_back(country2);
+        country2->neutral.push_back(country1);
+    }
+
+    bool                    confirm_D_Request ( DiplomacyRequest * dr) {
+        /** The function to process confirmation of a diplomacy request.
+         * It returns true if the country accepting the offer is capable of satisfying the resources demanded,
+         * false if the navigation back is selected.
+         *
+         */
+
+        // to-do if request is turned down, restore sender's resources
+        int energyD = 0, metalD = 0, oilD = 0; // variables for demanded resources
+        int energyO = 0, metalO = 0, oilO = 0; // variables for offered resources
+        Region * donorRegion = NULL;
+        Region * recipientRegion = NULL;
+
+
+        if (dr->oil != 0 || dr->energy != 0 || dr->metal != 0) {
+
+            if (dr->oil < 0) {
+                oilD = -dr->oil; // converting the value to positive
+            } else {
+                oilO = dr->oil;
+            }
+
+            if (dr->metal < 0) {
+                metalD = -dr->metal;// converting the value to positive
+            } else {
+                metalO = dr->metal;
+            }
+
+            if (dr->energy < 0) {
+                energyD = -dr->energy;// converting the value to positive
+            } else {
+                energyO = dr->energy;
+            }
         }
+
+
+        if (energyD > 0 || metalD > 0 || oilD > 0) {
+
+            do {
+                cout << "Send demanded resources from:" << endl;
+                donorRegion = Country::inputRegion(dr->recipientCountry, NULL);
+
+                if (donorRegion != NULL) {
+                    if (!donorRegion->checkResourceAvailability(metalD, oilD, energyD)) {
+                        cout << "Insufficient resources in stock" << endl << endl;
+                    } else if (dr->recipientCountry == NULL) { // Checking whether or not player selected a region
+                        return false;
+                    }
+
+                } else {
+                    return false;
+                }
+
+            } while (!donorRegion->checkResourceAvailability(metalD, oilD, energyD));
+
+
+        }
+
+        if (energyO > 0 || metalO > 0 || oilO > 0) {
+
+            cout << "Send offered resources to:" << endl;
+            recipientRegion = Country::inputRegion(dr->recipientCountry, NULL);
+            if (recipientRegion == NULL) { // Checking whether or not player selected a region
+                return false;
+            }
+
+            if (dr->recipientCountry == NULL) {
+                return false;
+            }
+        }
+
+
+        // Processing resources addition to recipient "country"
+        if (recipientRegion != NULL) {
+            recipientRegion->addResources(metalO, oilO, energyO);
+        }
+        // Processing resources deduction from recipient "country" and addition to issuer's country
+        if (donorRegion != NULL) {
+            donorRegion->deductResources(metalD, oilD, energyD);
+            cout << dr->resourceRecipientRegion->name << endl;
+            dr->resourceRecipientRegion->addToMetalStock(metalD);
+            dr->resourceRecipientRegion->addToOilStock(oilD);
+            dr->resourceRecipientRegion->addToEnergyStock(energyD);
+        }
+
+        if ( dr->aPassRight > 0) {
+            newMAccessTreaty(dr->issuerCountry, dr->recipientCountry, dr->aPassRight);
+        }
+        if (dr->formAlliance) {
+            newAlliance(dr->issuerCountry, dr->recipientCountry);
+        }
+        if (dr->ceasefire) {
+            ceasefire(dr->issuerCountry, dr->recipientCountry);
+        }
+
+
+
+        // OBJECT REMOVED FROM THE VECTOR OF ONGOING REQUESTS and sent/received vectors of both countries
+        allDiplomacyRequests.erase(remove(allDiplomacyRequests.begin(), allDiplomacyRequests.end(),dr ), allDiplomacyRequests.end());
+        dr->issuerCountry->removeSentRequest(dr);
+        dr->recipientCountry->removeReceivedRequest(dr);
+
+
+
+        delete dr;
+        return true;
+
     }
 
     void                    new_DRequest     (Country *issuer) {
 // to-do exceptions management for input validation cin >> energy
+        Region * resourceDonorRegion = NULL;
+        Region * resourceRecipientRegion = NULL;
         Country *recipient;
         char userInput;
         string userMessage;
+
 
         bool formAlliance = false;
         bool ceasefire = false;
@@ -307,157 +500,173 @@ public:
             cout << " 3: Add message" << endl;
             cout << " 4: Summary" << endl;
             cout << " 5: Confirm and send" << endl;
-            cout << " 6: Discard" << endl;
+            cout << " 6: < Back <" << endl;
+            if (!areAtWar(issuer,recipient)) {
+                cout << " 7: Declare war to " << recipient->countryName << endl;
+            }
             cout << "-> ";
 
             cin >> userInput;
 
-
                 switch (userInput) {
-                    case ('1') : {
-                        char userSubInput;
+                    case ('1') : {                                                                              // OFFER
+                        int userSubInput;
+                        string userOption = "";
+                        map <int, string> offerOptions;
+                        bool resourceOption; // whether or not the player's command was resource related
+
+                        while (true) {
+                            offerOptions = getOfferOptions(issuer, recipient, userOption);
+                            outputOfferOptions(offerOptions);
+
+                            cin >> userSubInput;
+                            resourceOption = offerOptions[userSubInput] == "energyO" || offerOptions[userSubInput] == "metalO" || offerOptions[userSubInput] == "oilO";
+
+                            // Condition to require user input of a "region" where to take the resources from
+                            if (resourceOption && resourceDonorRegion == NULL) {
+                                cout << "Send from:" << endl;
+                                resourceDonorRegion = Country::inputRegion(issuer, NULL);
+                                if (resourceDonorRegion == NULL) {
+                                    continue;
+                                }
+                            };
+
+                            // Processing the player's command
+
+                            if (offerOptions[userSubInput] == "alliance") {                 // ALLIANCE
+                                formAlliance = true;
+                                cout << "Alliance added to the request" << endl;
+                                userOption = "alliance";
+                                continue;
+                            } else if (offerOptions[userSubInput] == "ceasefire") {         // CEASEFIRE
+                                ceasefire = true;
+                                cout << "Ceasefire added to the request" << endl;
+                                userOption = "ceasefire";
+                                continue;
+                            } else if (offerOptions[userSubInput] == "energyO") {           // ENERGY
+                                cout << "Amount of energy: ";
+                                cin >> energy;
+                                if ( !resourceDonorRegion->checkResourceAvailability(0,0, energy) ) {
+                                    cout << "Insufficient energy stock in " << resourceDonorRegion->name << endl;
+                                    energy = 0;
+                                }
+                                continue;
+                            } else if (offerOptions[userSubInput] == "metalO") {            // METAL
+                                cout << "Amount of metal: ";
+                                cin >> metal;
+                                if ( !resourceDonorRegion->checkResourceAvailability(metal, 0, 0) ) {
+                                    cout << "Insufficient metal stock in " << resourceDonorRegion->name << endl;
+                                    metal = 0;
+                                }
+                                continue;
+                            } else if (offerOptions[userSubInput] == "oilO") {              // OIL
+                                cout << "Amount of oil: ";
+                                cin >> oil;
+                                if ( !resourceDonorRegion->checkResourceAvailability(0,oil, 0) ) {
+                                    cout << "Insufficient oil stock in " << resourceDonorRegion->name << endl;
+                                    oil = 0;
+                                }
+                                continue;
+                            } else if (offerOptions[userSubInput] == "reset") {             // RESET
+                                formAlliance = false;
+                                ceasefire = false;
+                                aPassRight = 0;
+                                resourceDonorRegion = NULL;
+
+                                if (metal > 0) {
+                                    metal = 0;
+                                }
+                                if (oil > 0) {
+                                    oil = 0;
+                                }
+                                if (energy > 0) {
+                                    energy = 0;
+                                }
+                                continue;
+                            } else if (offerOptions[userSubInput] == "back") {              // BACK
+                                break;
+                            } else {                                                        // ILLEGAL INPUT
+                                cout << endl << "Wrong Input" << endl;
+                                continue;
+                            }
+                        }
+                        break;
+                    }
+
+                    case ('2'): {                                                                            // DEMANDED
+
+                        int userSubInput;
+                        string userOption = "";
+                        map <int, string> demandOptions;
+                        bool resourceOption; // whether or not the player's command was resource related
 
                         while (true) {
 
-                            cout << endl << "| Offer |" << endl;
-                            if (not formAlliance) {cout  << " 1: Form alliance " << endl;}
-                            if (not ceasefire) {cout << " 2: Cease of hostility" << endl;}
-                            cout << " 3: Send energy" << endl;
-                            cout << " 4: Send metal" << endl;
-                            cout << " 5: Sent oil" << endl;
-                            cout << " 6: Reset" << endl;
-                            cout << " 7: Back" << endl;
-                            cout << "-> ";
+                            demandOptions = getDemandOptions(issuer, recipient, userOption);
+                            outputDemandOptions(demandOptions);
 
                             cin >> userSubInput;
 
-                            switch (userSubInput) {
-                                case ('1'): {
-                                    formAlliance = true;
-                                    cout << "Alliance added to the request" << endl;
-                                    continue;
-                                }
-                                case ('2'): {
-                                    ceasefire = true;
-                                    cout << "Ceasefire added to the request" << endl;
-                                    continue;
-                                }
-                                case ('3'): {
-                                    cout << "Amount of energy: ";
-                                    cin >> energy;
-                                    continue;
-                                }
-                                case ('4'): {
-                                    cout << "Amount of metal: ";
-                                    cin >> metal;
-                                    continue;
-                                }
-                                case ('5'): {
-                                    cout << "Amount of oil: ";
-                                    cin >> oil;
-                                    continue;
-                                }
-                                case ('6'): {
-                                    formAlliance = false;
-                                    ceasefire = false;
-                                    aPassRight = 0;
+                            resourceOption = demandOptions[userSubInput] == "energyD" || demandOptions[userSubInput] == "metalD" || demandOptions[userSubInput] == "oilD";
 
-                                    if (metal > 0) {
-                                        metal = 0;
-                                    }
-                                    if (oil > 0) {
-                                        oil = 0;
-                                    }
-                                    if (energy > 0) {
-                                        energy = 0;
-                                    }
-                                    continue;
-                                }
-                                case ('7'): {
-                                    goto diplomacy_main_menu; // break statement does not break out of the loop :(
-                                }
-                                default: {
-                                    cout << endl << "Wrong Input" << endl;
+                            // Condition to require user input of a "region" where to take the resources from
+                            if (resourceOption && resourceRecipientRegion == NULL) {
+                                cout << "Demand resources for:" << endl;
+                                resourceRecipientRegion = Country::inputRegion(issuer, NULL);
+                                if (resourceDonorRegion == NULL) {
                                     continue;
                                 }
                             }
-                        }
-                    }
 
-                    case ('2'): {
 
-                        char userSubInput;
-
-                        while (true) {
-
-                            cout << endl << "| Demand |" << endl;
-                            if (aPassRight == 0) { cout << " 1: Request military access" << endl; }
-                            cout << " 2: Demand energy" << endl;
-                            cout << " 3: Demand metal" << endl;
-                            cout << " 4: Demand oil" << endl;
-                            cout << " 5: Reset" << endl;
-                            cout << " 6: Back" << endl;
-                            cout << "-> ";
-
-                            cin >> userSubInput;
-
-                            switch (userSubInput) {
-                                case ('1'): {
-                                    cout << "Amount of turns: ";
-                                    cin >> aPassRight;
-                                    if (aPassRight < 0) {
-                                        aPassRight = 0;
-                                    }
-                                    continue;
-                                }
-                                case ('2'): {
-                                    cout << "Amount of energy: ";
-                                    cin >> energy;
-                                    energy = -energy;
-                                    continue;
-                                }
-                                case ('3'): {
-                                    cout << "Amount of metal: ";
-                                    cin >> metal;
-                                    metal = -metal;
-                                    continue;
-                                }
-                                case ('4'): {
-                                    cout << "Amount of oil: ";
-                                    cin >> oil;
-                                    oil = -oil;
-                                    continue;
-                                }
-                                case ('5'): { // RESET DEMANDED
-
+                            if (demandOptions[userSubInput] == "MAccess") {
+                                cout << "Amount of turns: ";
+                                cin >> aPassRight;
+                                if (aPassRight < 0) {
                                     aPassRight = 0;
-
-                                    if (metal < 0) {
-                                        metal = 0;
-                                    }
-                                    if (oil < 0) {
-                                        metal = 0;
-                                    }
-                                    if (energy < 0) {
-                                        energy = 0;
-                                    }
-                                    continue;
                                 }
-                                case ('6'): {
-                                    goto diplomacy_main_menu;
+                                userOption = "MAccess";
+                                continue;
+                            } else if (demandOptions[userSubInput] == "energyD"){
+                                cout << "Amount of energy: ";
+                                cin >> energy;
+                                energy = -energy;
+                                continue;
+                            } else if (demandOptions[userSubInput] == "metalD") {
+                                cout << "Amount of metal: ";
+                                cin >> metal;
+                                metal = -metal;
+                                continue;
+                            } else if (demandOptions[userSubInput] == "oilD") {
+                                cout << "Amount of oil: ";
+                                cin >> oil;
+                                oil = -oil;
+                                continue;
+                            } else if (demandOptions[userSubInput] == "reset") {
+                                resourceRecipientRegion = NULL;
+
+                                aPassRight = 0;
+
+                                if (metal < 0) {
+                                    metal = 0;
                                 }
-
-                                default: {
-                                    cout << endl << "Wrong Input" << endl;
-                                    continue;
+                                if (oil < 0) {
+                                    metal = 0;
                                 }
-
-
+                                if (energy < 0) {
+                                    energy = 0;
+                                }
+                                continue;
+                            } else if (demandOptions[userSubInput] == "back") {
+                                break;
+                            } else {
+                                cout << endl << "Wrong Input" << endl;
+                                continue;
                             }
-
                         }
+                        break;
                     }
-
+// to-do prevent text input crash (i.e. clear buffer)
                     case ('3'): {
 
                         cout << endl << "| Message |" << endl;
@@ -482,9 +691,9 @@ public:
 
                         cout << endl << "> Demanded" << endl;
                         if (aPassRight > 0 ) { cout << " Military access for " << aPassRight << " turn(s)" << endl;}
-                        if (metal < 0) { cout << " Metal: " << metal << endl;}
-                        if (energy < 0) { cout << " Energy: " << energy << endl;}
-                        if (oil < 0) { cout << " Oil: " << oil << endl;}
+                        if (metal < 0) { cout << " Metal: " << -metal << endl;}
+                        if (energy < 0) { cout << " Energy: " << -energy << endl;}
+                        if (oil < 0) { cout << " Oil: " << -oil << endl;}
 
                         cout << endl << "> Message" << endl;
                         cout << endl << userMessage << endl;
@@ -513,14 +722,31 @@ public:
                                     cout << "Period of validity set to 1" << endl;
                                     periodOfValidity = 1;}
 
-                                DiplomacyRequest * dr = new DiplomacyRequest(issuer,recipient,userMessage,formAlliance,
-                                ceasefire,aPassRight, metal, oil, energy, periodOfValidity);
+                                if (resourceDonorRegion != NULL) {
+                                    // Reserving the offered resources until the request is resolved
+                                    if (metal > 0) {
+                                        resourceDonorRegion->deductResources(metal,0,0);
+                                    }
+                                    if (energy > 0) {
+                                        resourceDonorRegion->deductResources(0,0, energy);
+                                    }
+                                    if (oil > 0) {
+                                        resourceDonorRegion->deductResources(0,oil, 0);
+                                    }
+                                }
+                                DiplomacyRequest * dr = new DiplomacyRequest(issuer,recipient, resourceRecipientRegion,
+                                                            resourceDonorRegion, userMessage,formAlliance,
+                                                            ceasefire,aPassRight, metal, oil, energy, periodOfValidity);
 
                                 issuer -> sentDiplomacyRequests.push_back(dr);
                                 recipient -> receivedDiplomacyRequests.push_back(dr);
                                 allDiplomacyRequests.push_back(dr);
 
                                 cout << "Request sent successfully" << endl;
+                                // Send notification to recipient;
+                                string notificationText;
+                                notificationText = issuer->countryName + " sent you a diplomacy request.";
+                                recipient->addNotification(notificationText);
                                 break;
                             }
 
@@ -535,6 +761,33 @@ public:
                     }
                     case ('6'): {
                         return;}
+
+                    case ('7'): {
+                        if (!areAtWar(issuer,recipient) && !areAllied(issuer,recipient)) {
+                            char userSubInput;
+
+                            cout << endl << "Confirm war declaration to " << recipient->countryName << "?" << endl;
+                            cout << endl << "1: Confirm" << endl;
+                            cout << "2: Back" << endl;
+                            cout << "-> ";
+                            cin >> userSubInput;
+
+                            if (userSubInput == '1') {
+                                warDeclaration(issuer, recipient);
+                                cout << " War has been declared" << endl;
+
+                                // Send notification to recipient;
+                                string notificationText;
+                                notificationText = issuer->countryName + " declared war to you! TO ARMS!";
+                                recipient->addNotification(notificationText);
+                                return;
+                            } else {
+                                continue;
+                            }
+
+                        }
+                        break;
+                    }
 
                     default: {
                         cout << endl << "Wrong Input" << endl;
@@ -617,15 +870,54 @@ public:
 
                             while (true) {
                                 cout << endl << " 1. Confirm" << endl;
-                                cout << " 2. > Next >";
+                                cout << " 2. Decline\n" << endl;
+                                cout << " 3. > Next >\n";
                                 cout << "-> ";
 
                                 cin >> confirmationInput;
                                 if (confirmationInput == '1') {
-                                    confirm_D_Request(dr);
+                                    bool requestConditionsSatisfied = false;
+                                    requestConditionsSatisfied = confirm_D_Request(dr);
+
+                                    if (!requestConditionsSatisfied) {
+                                        continue;
+                                    } else {
+
+                                        string notificationText;
+                                        notificationText = dr->recipientCountry->countryName + " confirmed your diplomacy request";
+                                        dr->issuerCountry->addNotification(notificationText);
+                                        break;}
+
+                                } else if (confirmationInput == '2') {
+
+                                    // First, return the offered resources to the issuer's stock
+                                    if (dr->resourceRecipientRegion != NULL) {
+                                        if (dr->energy > 0) {
+                                            dr->resourceRecipientRegion->addToEnergyStock(dr->energy);
+                                        }
+                                        if (dr->metal > 0) {
+                                            dr->resourceRecipientRegion->addToMetalStock(dr->metal);
+                                        }
+                                        if (dr->oil > 0) {
+                                            dr->resourceRecipientRegion->addToOilStock(dr->oil);
+                                        }
+                                        string notificationText;
+                                        notificationText = dr->recipientCountry->countryName + " declined your diplomacy request";
+                                        dr->issuerCountry->addNotification(notificationText);
+                                    }
+
+                                    // OBJECT REMOVED FROM THE VECTOR OF ONGOING REQUESTS and sent/received vectors of both countries
+                                    allDiplomacyRequests.erase(remove(allDiplomacyRequests.begin(), allDiplomacyRequests.end(),dr ), allDiplomacyRequests.end());
+                                    dr->issuerCountry->removeSentRequest(dr);
+                                    dr->recipientCountry->removeReceivedRequest(dr);
+
+                                    delete dr;
+
+                                    break;
                                 } else {
-                                    continue;
+                                    break;
                                 }
+
                             }
                         }
                         continue;
@@ -653,6 +945,123 @@ public:
         } while (true);
     }
 
+    bool                    areAllied(Country *c1, Country *c2) {
+        /** Checking whether or not c2 and c1 are allied to each other*/
+        bool returnValue;
+        returnValue = std::find(c1->allies.begin(), c1->allies.end(), c2) != c1->allies.end();
+        return returnValue;
+    }
+    bool                    areAtWar(Country *c1, Country *c2) {
+        /** Checking whether or not c1 is at war with c2 */
+        bool returnValue;
+        returnValue = std::find(c1->enemies.begin(), c1->enemies.end(), c2) != c1->enemies.end();
+        return returnValue;
+    }
+    bool                    haveMAccess(Country *c1, Country *c2) {
+        /** Checking whether or not c2 has provided military access rights to c1 */
+        for (MilitaryAccess *ma : c1->territoryAccessRights) {
+            if (ma->getProvider() == c2) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+    bool                    isNeutral(Country *c1, Country *c2) {
+        for (Country* c : c1->neutral) {
+            if (c == c2) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    map <int, string>       getOfferOptions (Country *issuer, Country *recipient, string userSelectedOption) {
+
+        map <int, string> outMap;
+        int i = 1;
+
+        if (isNeutral(issuer, recipient) && userSelectedOption != "alliance") {
+            outMap[i] = "alliance";
+        } else if (areAllied(issuer, recipient)) {
+            i--;
+        } else if (areAtWar(issuer, recipient) && userSelectedOption != "ceasefire"){
+            outMap[i] = "ceasefire";
+        } else {
+            i = 0;
+        }
+
+        outMap[i+1] = "energyO";
+        outMap[i+2] = "metalO";
+        outMap[i+3] = "oilO";
+        outMap[i+4] = "reset";
+        outMap[i+5] = "back";
+
+        return outMap;
+    }
+    void                    outputOfferOptions (map <int, string> options) {
+
+        cout << endl << "| Offer |" << endl;
+        for (auto& option : options) {
+            if (option.second == "alliance") {
+                cout << option.first << ": Propose an alliance" << endl;
+            } else if (option.second == "ceasefire") {
+                cout << option.first << ": Propose a ceasefire" << endl;
+            } else if (option.second == "energyO") {
+                cout << option.first << ": Energy" << endl;
+            } else if (option.second == "metalO") {
+                cout << option.first << ": Metal" << endl;
+            } else if (option.second == "oilO") {
+                cout << option.first << ": Oil" << endl;
+            } else if (option.second == "reset") {
+                cout << option.first << ": Reset" << endl;
+            } else if (option.second == "back") {
+                cout << option.first << ": < Back <" << endl;
+            }
+        }
+        cout << "-> ";
+    }
+
+    map <int, string>       getDemandOptions (Country *issuer, Country *recipient, string userSelectedOption) {
+
+        map <int, string> outMap;
+        int i = 1;
+
+        if ( !haveMAccess(issuer, recipient) && (userSelectedOption != "MAccess") && (isNeutral(issuer, recipient))) {
+            outMap[i] = "MAccess";
+        } else {
+            i = 0;
+        }
+
+        outMap[i+1] = "energyD";
+        outMap[i+2] = "metalD";
+        outMap[i+3] = "oilD";
+        outMap[i+4] = "reset";
+        outMap[i+5] = "back";
+
+        return outMap;
+    }
+    void                    outputDemandOptions (map <int, string> options) {
+
+        cout << endl << "| DEMAND |" << endl;
+        for (auto& option : options) {
+            if (option.second == "MAccess") {
+                cout << option.first << ": Military access right" << endl;
+            } else if (option.second == "energyD") {
+                cout << option.first << ": Energy" << endl;
+            } else if (option.second == "metalD") {
+                cout << option.first << ": Metal" << endl;
+            } else if (option.second == "oilD") {
+                cout << option.first << ": Oil" << endl;
+            } else if (option.second == "reset") {
+                cout << option.first << ": Reset" << endl;
+            } else if (option.second == "back") {
+                cout << option.first << ": < Back <" << endl;
+            }
+        }
+        cout << "-> ";
+    }
 //  ### COUNTRY CONTROL ###
 
     map <string, Country*>  countries_to_map (Country *inCountry) {
@@ -744,9 +1153,10 @@ public:
         while (true) {  // MAINLOOP
             cout << endl << "[ Turn " << Manager::turn << " ] >>> " << countryInControl->countryName << " <<<" << endl ;
 
-            cout << endl << " 1: Diplomacy [" << countryInControl->receivedDiplomacyRequests.size() << "]" << endl;
+            cout << endl << " 1: Diplomacy" << endl;
             cout << " 2: Regions" << endl;
-            cout << " 3: End turn" << endl;
+            cout << " 3: Notifications [" << countryInControl->notifications.size() << "]" << endl;
+            cout << " 4: End turn" << endl;
             cout <<  "->  ";
 
             cin >> command;
@@ -763,13 +1173,20 @@ public:
                     string functionOutcome;
 
                     do {
-                        selectedRegion = countryInControl->inputRegion(NULL);
+                        selectedRegion = countryInControl->inputRegion(countryInControl, NULL);
                         if (selectedRegion == NULL) { break; }
                         functionOutcome = countryInControl->regionControlInterface(selectedRegion);
                     } while (functionOutcome == "back to region selection");
                     break;
                 }
+
                 case ('3'): {
+                    countryInControl->printNotifications();
+
+                    break;
+                }
+
+                case ('4'): {
                     return;
                 }
 
@@ -790,25 +1207,10 @@ public:
     Manager()
     {
         initRegions();
-//        init_Countries();
-//        fill_Neutral(); // Procedure to set all the initialised countries neutral to each other.
-        mainLoop();
+
     }
 
     virtual ~Manager() {
-        cout << "The End" << endl;
-        for ( int i = 0; i < countries.size(); i++) {
-
-
-            if (countries[i] != NULL) {
-            cout << countries[i]->countryName << " removed from the heap" << endl;
-            delete countries[i];
-            countries[i] = NULL;
-                // to-do resolve destruction issue
-            }
-        }
-
-        countriesInGame = 0;
     }
 
 };

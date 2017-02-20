@@ -23,7 +23,6 @@ class Country;
 class Army;
 
 // ### REGION & ARMY ###
-
 class Region {
 
 public:
