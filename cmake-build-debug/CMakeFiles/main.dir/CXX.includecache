@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Oscari/My Files/Git/ALL-project-2/Country.h
+Region.h
+/Users/Oscari/My Files/Git/ALL-project-2/Region.h
+
+/Users/Oscari/My Files/Git/ALL-project-2/Manager.h
+Country.h
+/Users/Oscari/My Files/Git/ALL-project-2/Country.h
+
+/Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
+iostream
+-
+
+/Users/Oscari/My Files/Git/ALL-project-2/Region.h
+iostream
+-
+string
+-
+vector
+-
+map
+-
+array
+-
+algorithm
+-
+MilitaryUnit.h
+/Users/Oscari/My Files/Git/ALL-project-2/MilitaryUnit.h
+Country.h
+/Users/Oscari/My Files/Git/ALL-project-2/Country.h
+
+/Users/Oscari/My Files/Git/ALL-project-2/main.cpp
+Manager.h
+/Users/Oscari/My Files/Git/ALL-project-2/Manager.h
+
