@@ -1,0 +1,116 @@
+#include <iostream>
+#include <windows.h>
+
+using namespace std;
+
+const int height = 15, width = 30;
+int x = 0, y = 0; //Player Coordinates
+
+void GrassColor() {
+    SetConsoleTextAttribute
+        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+}
+
+void NormalColor() {
+    SetConsoleTextAttribute
+        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+}
+
+void BlueColor() {
+    SetConsoleTextAttribute
+        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+}
+
+void RedColor() {
+    SetConsoleTextAttribute
+        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY);
+}
+
+// Grid/Map
+char myMap[height][width] = {
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '~', '~', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'~', '~', '~', '~', '~', '~', '~', '~', '~', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '~', '.', '~', '~', '~', '~', '~', '~', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '~', '~', '~', '~', '~', '~', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '~', '~', '~', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '~', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
+    {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' }
+};
+
+void PrintMap() {
+    cout << "(" << x << ','<< y << ")" << endl;
+    GrassColor();
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (myMap[i][j] == '.') {
+                GrassColor();
+                cout << myMap[i][j];
+            }
+            else if (myMap[i][j] == '~'){
+                BlueColor();
+                cout << myMap[i][j];
+            }
+            else if (myMap[i][j] == '@') {
+                RedColor();
+                cout << myMap[i][j];
+            }
+            else{
+                NormalColor();
+                cout << myMap[i][j];
+            }
+        }
+        cout << endl;
+    }
+    NormalColor();
+}
+
+int main() {
+    char input; //User movement input
+    char temp_tile = myMap[y][x]; // '.' (0, 0);
+    myMap[y][x] = '@'; // '@' (0, 0);
+    PrintMap(); 
+
+while (true) {
+    cin >> input;
+
+    if (input == 's' && y < height - 1) {
+        myMap[y][x] = temp_tile;
+        y++;
+        temp_tile = myMap[y][x];
+        myMap[y][x] = '@';
+        PrintMap();
+    }
+    if (input == 'e' && x < width - 1) {
+        myMap[y][x] = temp_tile;
+        x++;
+        temp_tile = myMap[y][x];
+        myMap[y][x] = '@';
+        PrintMap();
+    }
+    if (input == 'n' && y > 0){
+        myMap[y][x] = temp_tile;
+        y--;
+        temp_tile = myMap[y][x];
+        myMap[y][x] = '@';
+        PrintMap();
+    }
+
+    if (input == 'w' && x > 0) {
+        myMap[y][x] = temp_tile;
+        x--;
+        temp_tile = myMap[y][x];
+        myMap[y][x] = '@';
+        PrintMap();
+    }
+}
+    system("PAUSE");
+    return 0;
+}
