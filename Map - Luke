@@ -13,7 +13,6 @@ const std::string cyan("\033[0;36m");
 const std::string magenta("\033[0;35m");
 const std::string reset("\033[0m");
 
-
 // Grid/Map
 char myMap[height][width] = {
     {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
@@ -39,13 +38,13 @@ void PrintMap() {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (myMap[i][j] == '.') {
-                cout << green << myMap[i][j];
+                cout << green << myMap[i][j]; // Grass
             }
             else if (myMap[i][j] == '~'){
-                cout << cyan << myMap[i][j];
+                cout << cyan << myMap[i][j]; // Water
             }
             else if (myMap[i][j] == '@') {
-                cout << red << myMap[i][j];
+                cout << red << myMap[i][j]; // Player Icon
             }
             else{
                 cout << reset << myMap[i][j];
