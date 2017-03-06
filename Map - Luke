@@ -1,29 +1,16 @@
 #include <iostream>
-#include <windows.h> // Windows API
 using namespace std;
 
 const int height = 15, width = 30;
 int x = 0, y = 0; // Player Coordinates
 
-void GrassColor() {
-    SetConsoleTextAttribute
-        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-}
+const std::string red("\033[0;31m");
+const std::string green("\033[1;32m");
+const std::string yellow("\033[1;33m");
+const std::string cyan("\033[0;36m");
+const std::string magenta("\033[0;35m");
+const std::string reset("\033[0m");
 
-void NormalColor() {
-    SetConsoleTextAttribute
-        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-}
-
-void BlueColor() {
-    SetConsoleTextAttribute
-        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-}
-
-void RedColor() {
-    SetConsoleTextAttribute
-        (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY);
-}
 
 // Grid/Map
 char myMap[height][width] = {
@@ -44,39 +31,36 @@ char myMap[height][width] = {
     {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' }
 };
 
+// Applying Colours to Map and Print
 void PrintMap() {
     cout << "(" << x << ','<< y << ")" << endl;
-    GrassColor();
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (myMap[i][j] == '.') {
-                GrassColor();
-                cout << myMap[i][j];
+                cout << green << myMap[i][j];
             }
             else if (myMap[i][j] == '~'){
-                BlueColor();
-                cout << myMap[i][j];
+                cout << cyan << myMap[i][j];
             }
             else if (myMap[i][j] == '@') {
-                RedColor();
-                cout << myMap[i][j];
+                cout << red << myMap[i][j];
             }
             else{
-                NormalColor();
-                cout << myMap[i][j];
+                cout << reset << myMap[i][j];
             }
         }
         cout << endl;
     }
-    NormalColor();
 }
 
+// User Movement
 int main() {
     char input; // User movement input
     char temp_tile = myMap[y][x]; // '.' (0, 0);
     myMap[y][x] = '@'; // '@' (0, 0);
-    PrintMap();
-
+    PrintMap(); 
+    
+// Looping map generation  
 while (true) {
     cin >> input;
 
