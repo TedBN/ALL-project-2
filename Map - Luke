@@ -1,9 +1,11 @@
 #include <iostream>
+// #include <windows.h> Windows API - Disabled when working on Linux
 using namespace std;
 
 const int height = 15, width = 30;
 int x = 0, y = 0; // Player Coordinates
 
+//Setting colour values for Linux/Codio
 const std::string red("\033[0;31m");
 const std::string green("\033[1;32m");
 const std::string yellow("\033[1;33m");
@@ -97,3 +99,5 @@ while (true) {
     system("PAUSE");
     return 0;
 }
+
+// Luke Kilmartin - AxleCat
