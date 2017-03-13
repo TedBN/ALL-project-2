@@ -177,7 +177,7 @@ while (true) {
         myMap[y][x] = '@';
         PrintMap();
     }
-    if (input == '?'){
+    if (input == '?'){   //Player Help
         cout << "There are: " << enemySoldier << " Enemy Soldiers." << endl;
         cout << "There are: " << enemyBomb << " Enemy Bombs." << endl;
     }
