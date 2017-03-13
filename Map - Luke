@@ -222,8 +222,20 @@ while (true) {
     std::terminate();
     }
     
+//Victory/Win Condition
     if(x == 29 && y == 14){
+    sql = "UPDATE Score SET User_Score=User_Score+1"; // Update User Score
     cout << "You successfully escaped the battlefield!" << endl;
+    
+//Testing Update to Database
+    rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+   if( rc != SQLITE_OK ){
+      fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+   }else{
+      fprintf(stdout, "Records updated successfully\n");
+   }
+      
     usleep(5000000);
     std::terminate();
     }
