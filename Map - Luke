@@ -67,7 +67,7 @@ void PrintMap() {
                 cout << reset << myMap[i][j];
             }
         }
-        cout << endl;
+        cout << reset << endl;
     }
 }
 
