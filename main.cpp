@@ -31,14 +31,28 @@
 
 
 #include "Manager.h"
-
+#include <iostream>
+#include <string>
+#include <cstdlib>
+using namespace std;
 
 int main() {
+cout << "Please enter either New Game or MiniGame" << endl;
+std::string input = "Null";
+while(true){
+    cin >> input;
+    if (input == "Minigame" || input == "minigame"){
+        std::system("./Minigame");
+    }
+    else if (input == "New Game" || input == "new game" || input == "New game"{
     Manager newGame;
+    
 
-    // INITIALISATION OF REQUISITE OBJECTS FOR THE GAME
+    INITIALISATION OF REQUISITE OBJECTS FOR THE GAME
     newGame.initRegions();
     newGame.init_Countries();
     newGame.makeCountriesNeutral();
     newGame.mainLoop();
+    }
+}
 }
