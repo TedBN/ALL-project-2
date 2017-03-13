@@ -133,6 +133,7 @@ PrintMap();
 
 // Looping map generation  
 while (true) {
+    myMap[14][29] = '=';
     cin >> input;
 
 //Keeping player within boundaries
@@ -142,21 +143,21 @@ while (true) {
         temp_tile = myMap[y][x];
         myMap[y][x] = '@';
         PrintMap();
-}
+    }
     if (input == 'd' && x < width - 1) {
         myMap[y][x] = temp_tile;
         x++;
         temp_tile = myMap[y][x];
         myMap[y][x] = '@';
         PrintMap();
-}
+    }
     if (input == 'w' && y > 0){
         myMap[y][x] = temp_tile;
         y--;
         temp_tile = myMap[y][x];
         myMap[y][x] = '@';
         PrintMap();
-}
+    }
 
     if (input == 'a' && x > 0) {
         myMap[y][x] = temp_tile;
@@ -164,62 +165,68 @@ while (true) {
         temp_tile = myMap[y][x];
         myMap[y][x] = '@';
         PrintMap();
-}
+    }
     
 // Using preset bomb and enemy values for demonsration purposes
     if(x == 25 && y == 12){
     cout << "You ran into a bomb!" << endl;
     usleep(5000000); //Wait
     std::terminate(); //Program ends
-}
+    }
     
     if(x == 7 && y == 2){
     cout << "You ran into an enemy soldier!" << endl;
     usleep(5000000);
     std::terminate();
-}
+    }
     
     if(x == 7 && y == 2){
     cout << "You ran into an enemy soldier!" << endl;
     usleep(5000000);
     std::terminate();
-}
+    }
     
     if(x == 12 && y == 1){
     cout << "You ran into an enemy soldier!" << endl;
     usleep(5000000);
     std::terminate();
-}
+    }
     
     if(x == 19 && y == 5){
     cout << "You ran into an enemy soldier!" << endl;
     usleep(5000000);
     std::terminate();
-}
+    }
     
     if(x == 16 && y == 8){
     cout << "You ran into an enemy soldier!" << endl;
     usleep(5000000);
     std::terminate();
-}
+    }
     
     if(x == 1 && y == 9){
     cout << "You ran into an enemy soldier!" << endl;
     usleep(5000000);
     std::terminate();
-}
+    }
     
     if(x == 25 && y == 8){
     cout << "You ran into a bomb!" << endl;
     usleep(5000000);
     std::terminate();
-}
+    }
     
     if(x == 16 && y == 13){
     cout << "You ran into a bomb!" << endl;
     usleep(5000000);
     std::terminate();
- }
+    }
+    
+    if(x == 29 && y == 14){
+    cout << "You successfully escaped the battlefield!" << endl;
+    usleep(5000000);
+    std::terminate();
+    }
 }
     system("PAUSE");
     return 0;
