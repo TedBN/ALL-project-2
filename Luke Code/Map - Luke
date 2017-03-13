@@ -31,6 +31,15 @@ const std::string cyan("\033[0;36m");
 const std::string magenta("\033[0;35m");
 const std::string reset("\033[0m");
 
+// Classes
+class enemySoldier{
+  int amount = 5;
+};
+
+class enemyBomb{
+   int amount = 3;
+};
+
 // Grid/Map
 char myMap[height][width] = {
     {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.' },
@@ -135,6 +144,8 @@ PrintMap();
 while (true) {
     myMap[14][29] = '=';
     cin >> input;
+    int enemySoldier = 5;
+    int enemyBomb = 3;
 
 //Keeping player within boundaries
     if (input == 's' && y < height - 1) {
@@ -166,7 +177,11 @@ while (true) {
         myMap[y][x] = '@';
         PrintMap();
     }
-    
+    if (input == '?'){
+        cout << "There are: " << enemySoldier << " Enemy Soldiers." << endl;
+        cout << "There are: " << enemyBomb << " Enemy Bombs." << endl;
+    }
+
 // Using preset bomb and enemy values for demonsration purposes
     if(x == 25 && y == 12){
     cout << "You ran into a bomb!" << endl;
@@ -232,10 +247,10 @@ while (true) {
    if( rc != SQLITE_OK ){
       fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
-   }else{
-      fprintf(stdout, "Records updated successfully\n");
    }
-      
+   else{
+      fprintf(stdout, "Records updated successfully\n");
+   } 
     usleep(5000000);
     std::terminate();
     }
