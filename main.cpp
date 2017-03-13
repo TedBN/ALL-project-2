@@ -37,7 +37,7 @@
 using namespace std;
 
 int main() {
-cout << "Please enter either New Game or MiniGame" << endl;
+cout << "Please enter either New Game or Minigame" << endl;
 std::string input = "Null";
 while(true){
     cin >> input;
